@@ -25,13 +25,15 @@ module.exports = (sequelize, DataTypes) => {
       });
 
       Group.belongsToMany(models.User, {
-        through: 'Memberships',
+        through: models.Membership,
         foreignKey: 'groupId',
-        otherKey: 'userId'
+        otherKey: 'userId',
+        as: 'memberships'
       });
 
       Group.belongsTo(models.User, {
-        foreignKey: 'organizerId'
+        foreignKey: 'organizerId',
+        as: 'organizer'
       });
     }
   }
