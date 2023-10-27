@@ -16,7 +16,11 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       groupId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Groups',
+          key: 'id'
+        }
       },
       url: {
         type: Sequelize.STRING
@@ -37,6 +41,7 @@ module.exports = {
     }, options);
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('GroupImages');
+    options.tableName = 'GroupImages';
+    return queryInterface.dropTable(options);
   }
 };

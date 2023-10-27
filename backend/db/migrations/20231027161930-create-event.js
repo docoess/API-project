@@ -16,10 +16,18 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       venueId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Venues',
+          key: 'id'
+        }
       },
       groupId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Groups',
+          key: 'id'
+        }
       },
       name: {
         type: Sequelize.STRING
@@ -56,6 +64,7 @@ module.exports = {
     }, options);
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Events');
+    options.tableName = 'Events';
+    return queryInterface.dropTable(options);
   }
 };

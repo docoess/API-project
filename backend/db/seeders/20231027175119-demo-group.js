@@ -2,6 +2,11 @@
 
 const { Group } = require('../models');
 
+let options = {};
+if (process.env.NODE_ENV === 'production') {
+  options.schema = process.env.SCHEMA; // define your schema in options object
+}
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
@@ -71,5 +76,10 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
+    options.tableName = 'Groups';
+    const Op = Sequelize.Op;
+    return queryInterface.bulkDelete(options, {
+      name: { [Op.in]: ['Junior WebDev Camp People', 'Gamers Unite', 'Super Secret People Club', 'Criminal Club', 'Robot Club']}
+    }, {});
   }
 };

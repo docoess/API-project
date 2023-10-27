@@ -36,7 +36,13 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Group.init({
-    organizerId: DataTypes.INTEGER,
+    organizerId: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'Users',
+        key: 'id'
+      }
+    },
     name: {
       type: DataTypes.STRING,
       validate: {
@@ -54,7 +60,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     type: {
-      type: DataTypes.ENUM,
+      type: DataTypes.ENUM('Online', 'In person'),
       validate: {
         type: {
           [Op.in]: ['Online', 'In person']

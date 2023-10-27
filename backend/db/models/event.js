@@ -26,8 +26,20 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Event.init({
-    venueId: DataTypes.INTEGER,
-    groupId: DataTypes.INTEGER,
+    venueId: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'Venues',
+        key: 'id'
+      }
+    },
+    groupId: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'Groups',
+        key: 'id'
+      }
+    },
     name: {
       type: DataTypes.STRING,
       validate: {
@@ -43,7 +55,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     type: {
-      type: DataTypes.ENUM,
+      type: DataTypes.ENUM('Online', 'In person'),
       validate: {
         type: {
           [Op.in]: ['Online', 'In person']
