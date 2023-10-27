@@ -30,12 +30,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     status: {
-      type: DataTypes.ENUM('attending', 'pending', 'waitlist'),
-      validate: {
-        status: {
-          [Op.in]: ['attending', 'pending', 'waitlist']
-        }
-      }
+      type: DataTypes.ENUM('attending', 'pending', 'waitlist')
     }
   }, {
     sequelize,
