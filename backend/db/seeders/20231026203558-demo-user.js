@@ -5,7 +5,7 @@ const bcrypt = require('bcryptjs');
 
 let options = {};
 if (process.env.NODE_ENV === 'production') {
-  options.schema = process.env.SCHEMA;
+  options.schema = process.env.SCHEMA; // define your schema in options object
 }
 
 /** @type {import('sequelize-cli').Migration} */
@@ -42,6 +42,20 @@ module.exports = {
         lastName: 'Two',
         username: 'FakeUser2',
         hashedPassword: bcrypt.hashSync('password3')
+      },
+      {
+        email: 'billy@test.io',
+        firstName: 'Billy',
+        lastName: 'Meeeeee',
+        username: 'billyme23',
+        hashedPassword: bcrypt.hashSync('aGreatPassword')
+      },
+      {
+        email: 'demo5@alive.io',
+        firstName: 'Johnny',
+        lastName: 'Five',
+        username: 'jfivealive',
+        hashedPassword: bcrypt.hashSync('ShortCircuit')
       }
     ], { validate: true });
   },
@@ -56,7 +70,7 @@ module.exports = {
     options.tableName = 'Users';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      username: { [Op.in]: ['Demo-lition', 'FakeUser1', 'FakeUser2'] }
+      username: { [Op.in]: ['Demo-lition', 'FakeUser1', 'FakeUser2', 'billyme23', 'jfivealive'] }
     }, {});
   }
 };
