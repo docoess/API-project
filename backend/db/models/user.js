@@ -12,11 +12,32 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      User.belongsToMany(models.Event, {
+        through: 'Attendances',
+        foreignKey: 'userId',
+        otherKey: 'eventId'
+      });
+
+      User.belongsToMany(models.Group, {
+        through: 'Memberships',
+        foreignKey: 'userId',
+        otherKey: 'groupId'
+      });
+
+      User.hasMany(models.Group, {
+        foreignKey: 'organizerId'
+      });
     }
   }
   User.init({
-    firstName: DataTypes.STRING,
-    lastName: DataTypes.STRING,
+    firstName: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    lastName: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
     username: {
       type: DataTypes.STRING,
       allowNull: false,

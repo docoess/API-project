@@ -3,11 +3,6 @@
 const { User } = require('../models');
 const bcrypt = require('bcryptjs');
 
-let options = {};
-if (process.env.NODE_ENV === 'production') {
-  options.schema = process.env.SCHEMA;
-}
-
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
@@ -42,6 +37,20 @@ module.exports = {
         lastName: 'Two',
         username: 'FakeUser2',
         hashedPassword: bcrypt.hashSync('password3')
+      },
+      {
+        email: 'billy@test.io',
+        firstName: 'Billy',
+        lastName: 'Meeeeee',
+        username: 'billyme23',
+        hashedPassword: bcrypt.hashSync('aGreatPassword')
+      },
+      {
+        email: 'demo5@alive.io',
+        firstName: 'Johnny',
+        lastName: 'Five',
+        username: 'jfivealive',
+        hashedPassword: bcrypt.hashSync('ShortCircuit')
       }
     ], { validate: true });
   },
