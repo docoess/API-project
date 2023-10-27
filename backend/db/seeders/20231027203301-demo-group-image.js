@@ -24,7 +24,7 @@ module.exports = {
       {
         groupId: 1,
         url: 'http://imgur.com',
-        preview: false
+        preview: true
       },
       {
         groupId: 2,
@@ -34,12 +34,12 @@ module.exports = {
       {
         groupId: 3,
         url: 'http://imgur.com',
-        preview: false
+        preview: true
       },
       {
         groupId: 4,
         url: 'http://imgur.com',
-        preview: false
+        preview: true
       },
       {
         groupId: 5,
