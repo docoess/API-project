@@ -7,6 +7,13 @@ router.get('/:groupId', async (req, res) => {
   const { groupId } = req.params;
   let group = await Group.findByPk(groupId);
 
+  if (!group) {
+    res.status(404)
+    return res.json({
+      message: "Group couldn't be found"
+    });
+  }
+
   group = group.toJSON();
 
   group.numMembers = await Membership.count({
