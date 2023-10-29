@@ -1,7 +1,49 @@
 const express = require('express');
 const router = express.Router();
 
-const { Group, Membership, GroupImage } = require('../../db/models');
+const { Group, Membership, GroupImage, Venue, User } = require('../../db/models');
+
+router.get('/:groupId', async (req, res) => {
+  const { groupId } = req.params;
+  let group = await Group.findByPk(groupId);
+
+  group = group.toJSON();
+
+  group.numMembers = await Membership.count({
+    where: {
+      groupId: group.id
+    }
+  });
+
+  group.GroupImages = await GroupImage.findAll({
+    where: {
+      groupId: group.id
+    },
+    attributes: ['id', 'url', 'preview']
+  });
+
+  group.Organizer = await User.findOne({
+    where: {
+      id: group.organizerId
+    },
+    attributes: {
+      exclude: ['username']
+    }
+  });
+
+  group.Venues = await Venue.findAll({
+    where: {
+      groupId: group.id
+    },
+    attributes: {
+      exclude: ['createdAt', 'updatedAt']
+    }
+  });
+
+
+
+  res.json(group);
+});
 
 router.get('/', async (_req, res) => {
   let groups = await Group.findAll();

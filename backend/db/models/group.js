@@ -28,12 +28,12 @@ module.exports = (sequelize, DataTypes) => {
         through: models.Membership,
         foreignKey: 'groupId',
         otherKey: 'userId',
-        as: 'memberships'
+        as: 'Memberships'
       });
 
       Group.belongsTo(models.User, {
         foreignKey: 'organizerId',
-        as: 'organizer'
+        as: 'Organizer'
       });
     }
   }
