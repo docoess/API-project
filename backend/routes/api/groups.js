@@ -37,6 +37,30 @@ const validateGroup = [
   handleValidationErrors
 ];
 
+const validateVenue = [
+  check('address')
+    .exists()
+    .notEmpty()
+    .withMessage('Street address is required'),
+  check('city')
+    .exists()
+    .notEmpty()
+    .withMessage('City is required'),
+  check('state')
+    .exists()
+    .notEmpty()
+    .withMessage('State is required'),
+  check('lat')
+    .exists()
+    .isDecimal()
+    .withMessage('Latitude is not valid'),
+  check('lng')
+    .exists()
+    .isDecimal()
+    .withMessage('Longitude is not valid'),
+  handleValidationErrors
+];
+
 router.get('/:groupId/venues', requireAuth, async (req, res, next) => {
   const userId = req.user.id;
   const { groupId } = req.params;
@@ -201,6 +225,46 @@ router.get('/', async (_req, res) => {
 
 
   return res.json(modifiedGroups);
+});
+
+router.post('/:groupId/venues', requireAuth, validateVenue, async (req, res, next) => {
+  const userId = req.user.id;
+  const { groupId } = req.params;
+  const { address, city, state, lat, lng } = req.body;
+
+  let venue;
+
+  const group = await Group.findByPk(groupId);
+
+  const member = await Membership.findOne({
+    where: {
+      groupId,
+      userId
+    }
+  });
+
+  if (!group) {
+    res.status(404)
+    return res.json({
+      message: "Group couldn't be found"
+    });
+  }
+
+  if (group.organizerId === userId || member.status === 'co-host') {
+    venue = await Venue.create({
+      groupId,
+      address,
+      city,
+      state,
+      lat,
+      lng
+    });
+  }
+
+  venue = await Venue.findByPk(venue.id);
+
+  return res.json(venue);
+
 });
 
 router.post('/:groupId/images', requireAuth, async (req, res, next) => {
