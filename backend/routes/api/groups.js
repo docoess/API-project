@@ -37,6 +37,43 @@ const validateGroup = [
   handleValidationErrors
 ];
 
+router.get('/:groupId/venues', requireAuth, async (req, res, next) => {
+  const userId = req.user.id;
+  const { groupId } = req.params;
+
+  let venues;
+
+  let group = await Group.findByPk(groupId);
+  const memStatus = await Membership.findOne({
+    where: {
+      userId
+    }
+  });
+
+  if (!group) {
+    res.status(404)
+    return res.json({
+      message: "Group couldn't be found"
+    });
+  }
+
+  if (group.organizerId === userId || memStatus.status === 'co-host') {
+    venues = await Venue.findAll({
+      where: {
+        groupId
+      },
+      attributes: {
+        exclude: ['createdAt', 'updatedAt']
+      }
+    });
+  }
+
+  return res.json({
+    Venues: venues
+  });
+
+});
+
 
 router.get('/current', requireAuth, async (req, res, next) => {
   const userId = req.user.id;
