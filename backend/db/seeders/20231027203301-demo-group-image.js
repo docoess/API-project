@@ -23,27 +23,27 @@ module.exports = {
     await GroupImage.bulkCreate([
       {
         groupId: 1,
-        url: 'http://imgur.com',
+        url: 'image url',
         preview: true
       },
       {
         groupId: 2,
-        url: 'http://imgur.com',
+        url: 'image url',
         preview: true
       },
       {
         groupId: 3,
-        url: 'http://imgur.com',
+        url: 'image url',
         preview: true
       },
       {
         groupId: 4,
-        url: 'http://imgur.com',
+        url: 'image url',
         preview: true
       },
       {
         groupId: 5,
-        url: 'http://imgur.com',
+        url: 'image url',
         preview: true
       }
     ], { validate: true });

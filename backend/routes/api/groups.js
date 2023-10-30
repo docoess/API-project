@@ -6,6 +6,8 @@ const { requireAuth } = require('../../utils/auth.js')
 
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
+const { Op } = require('sequelize');
+const group = require('../../db/models/group');
 
 const validateGroup = [
   check('name')
@@ -34,6 +36,56 @@ const validateGroup = [
     .withMessage('State is required'),
   handleValidationErrors
 ];
+
+
+router.get('/current', requireAuth, async (req, res, next) => {
+  const userId = req.user.id;
+  const modifiedGroups = { "Groups": []};
+
+  const userMemberships = await Membership.findAll({
+    where: {
+      userId: userId
+    }
+  });
+
+  let memGroups = [];
+  for (let membership of userMemberships) {
+    memGroups.push(membership.groupId);
+  }
+
+  let groups = await Group.findAll({
+    where: {
+      id: {
+        [Op.in]: memGroups
+      }
+    }
+  });
+
+  for (let group of groups) {
+    const members = await Membership.count({
+      where: {
+        groupId: group.id
+      }
+    });
+
+    const previewImg = await GroupImage.findOne({
+      where: {
+        preview: true,
+        groupId: group.id
+      }
+    });
+
+    group = group.toJSON();
+
+    group.numMembers = members;
+    group.previewImage = previewImg.url || null;
+
+    modifiedGroups.Groups.push(group)
+  }
+
+  return res.json(modifiedGroups);
+
+});
 
 router.get('/:groupId', async (req, res) => {
   const { groupId } = req.params;
@@ -80,7 +132,7 @@ router.get('/:groupId', async (req, res) => {
   });
 
 
-  res.json(group);
+  return res.json(group);
 });
 
 router.get('/', async (_req, res) => {
@@ -104,7 +156,7 @@ router.get('/', async (_req, res) => {
     group = group.toJSON();
 
     group.numMembers = members;
-    group.previewImage = previewImg.url;
+    group.previewImage = previewImg.url || null;
 
     modifiedGroups.Groups.push(group)
   }
@@ -112,6 +164,47 @@ router.get('/', async (_req, res) => {
 
 
   return res.json(modifiedGroups);
+});
+
+router.post('/:groupId/images', requireAuth, async (req, res, next) => {
+  const userId = req.user.id;
+  const { groupId } = req.params;
+
+  let group = await Group.findByPk(groupId);
+
+  if (!group) {
+    res.status(404);
+    return res.json({
+      error: {
+        message: "Group couldn't be found"
+      }
+    });
+  };
+
+  if (userId !== group.organizerId) {
+    res.status(403);
+    return res.json({
+      error: {
+        message: 'Not authorized'
+      }
+    });
+  };
+
+  const { url, preview } = req.body;
+
+  const groupImage = await GroupImage.create({
+    groupId,
+    url,
+    preview
+  });
+
+  return res.json({
+    id: groupImage.id,
+    url,
+    preview
+  });
+
+
 });
 
 router.post('/', requireAuth, validateGroup, async (req, res, next) => {
@@ -130,6 +223,44 @@ router.post('/', requireAuth, validateGroup, async (req, res, next) => {
 
   return res.json(group);
 
+});
+
+router.put('/:groupId', requireAuth, validateGroup, async (req, res, next) => {
+  const userId = req.user.id;
+  const { groupId } = req.params;
+
+  let group = await Group.findByPk(groupId);
+
+  if (!group) {
+    res.status(404);
+    return res.json({
+      error: {
+        message: "Group couldn't be found"
+      }
+    });
+  };
+
+  if (userId !== group.organizerId) {
+    res.status(403);
+    return res.json({
+      error: {
+        message: 'Not authorized'
+      }
+    });
+  };
+
+  const { name, about, type, private, city, state } = req.body;
+
+  group = group.toJSON();
+
+  group.name = name;
+  group.about = about;
+  group.type = type;
+  group.private = private;
+  group.city = city;
+  group.state = state;
+
+  return res.json(group);
 });
 
 module.exports = router;
