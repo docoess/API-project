@@ -23,27 +23,27 @@ module.exports = {
     await EventImage.bulkCreate([
       {
         eventId: 3,
-        url: 'http://imgur.com',
+        url: 'image url',
         preview: false
       },
       {
         eventId: 1,
-        url: 'http://imgur.com',
+        url: 'image url',
         preview: true
       },
       {
         eventId: 2,
-        url: 'http://imgur.com',
+        url: 'image url',
         preview: false
       },
       {
         eventId: 4,
-        url: 'http://imgur.com',
+        url: 'image url',
         preview: false
       },
       {
         eventId: 5,
-        url: 'http://imgur.com',
+        url: 'image url',
         preview: true
       },
     ], { validate: true });

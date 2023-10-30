@@ -114,6 +114,47 @@ router.get('/', async (_req, res) => {
   return res.json(modifiedGroups);
 });
 
+router.post('/:groupId/images', requireAuth, async (req, res, next) => {
+  const userId = req.user.id;
+  const { groupId } = req.params;
+
+  let group = await Group.findByPk(groupId);
+
+  if (!group) {
+    res.status(404);
+    return res.json({
+      error: {
+        message: "Group couldn't be found"
+      }
+    });
+  };
+
+  if (userId !== group.organizerId) {
+    res.status(403);
+    return res.json({
+      error: {
+        message: 'Not authorized'
+      }
+    });
+  };
+
+  const { url, preview } = req.body;
+
+  const groupImage = await GroupImage.create({
+    groupId,
+    url,
+    preview
+  });
+
+  return res.json({
+    id: groupImage.id,
+    url,
+    preview
+  });
+
+
+});
+
 router.post('/', requireAuth, validateGroup, async (req, res, next) => {
   const userId = req.user.id;
   const { name, about, type, private, city, state } = req.body;
@@ -153,7 +194,7 @@ router.put('/:groupId', requireAuth, validateGroup, async (req, res, next) => {
       error: {
         message: 'Not authorized'
       }
-    });;
+    });
   };
 
   const { name, about, type, private, city, state } = req.body;
