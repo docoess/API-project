@@ -6,6 +6,8 @@ const { requireAuth } = require('../../utils/auth.js')
 
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
+const { Op } = require('sequelize');
+const group = require('../../db/models/group');
 
 const validateGroup = [
   check('name')
@@ -34,6 +36,56 @@ const validateGroup = [
     .withMessage('State is required'),
   handleValidationErrors
 ];
+
+
+router.get('/current', requireAuth, async (req, res, next) => {
+  const userId = req.user.id;
+  const modifiedGroups = { "Groups": []};
+
+  const userMemberships = await Membership.findAll({
+    where: {
+      userId: userId
+    }
+  });
+
+  let memGroups = [];
+  for (let membership of userMemberships) {
+    memGroups.push(membership.groupId);
+  }
+
+  let groups = await Group.findAll({
+    where: {
+      id: {
+        [Op.in]: memGroups
+      }
+    }
+  });
+
+  for (let group of groups) {
+    const members = await Membership.count({
+      where: {
+        groupId: group.id
+      }
+    });
+
+    const previewImg = await GroupImage.findOne({
+      where: {
+        preview: true,
+        groupId: group.id
+      }
+    });
+
+    group = group.toJSON();
+
+    group.numMembers = members;
+    group.previewImage = previewImg.url || null;
+
+    modifiedGroups.Groups.push(group)
+  }
+
+  return res.json(modifiedGroups);
+
+});
 
 router.get('/:groupId', async (req, res) => {
   const { groupId } = req.params;
@@ -104,7 +156,7 @@ router.get('/', async (_req, res) => {
     group = group.toJSON();
 
     group.numMembers = members;
-    group.previewImage = previewImg.url;
+    group.previewImage = previewImg.url || null;
 
     modifiedGroups.Groups.push(group)
   }
