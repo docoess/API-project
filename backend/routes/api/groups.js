@@ -48,7 +48,6 @@ router.get('/:groupId', async (req, res) => {
   });
 
 
-
   res.json(group);
 });
 
