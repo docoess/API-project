@@ -80,7 +80,7 @@ router.get('/:groupId', async (req, res) => {
   });
 
 
-  res.json(group);
+  return res.json(group);
 });
 
 router.get('/', async (_req, res) => {
@@ -130,6 +130,44 @@ router.post('/', requireAuth, validateGroup, async (req, res, next) => {
 
   return res.json(group);
 
+});
+
+router.put('/:groupId', requireAuth, validateGroup, async (req, res, next) => {
+  const userId = req.user.id;
+  const { groupId } = req.params;
+
+  let group = await Group.findByPk(groupId);
+
+  if (!group) {
+    res.status(404);
+    return res.json({
+      error: {
+        message: "Group couldn't be found"
+      }
+    });
+  };
+
+  if (userId !== group.organizerId) {
+    res.status(403);
+    return res.json({
+      error: {
+        message: 'Not authorized'
+      }
+    });;
+  };
+
+  const { name, about, type, private, city, state } = req.body;
+
+  group = group.toJSON();
+
+  group.name = name;
+  group.about = about;
+  group.type = type;
+  group.private = private;
+  group.city = city;
+  group.state = state;
+
+  return res.json(group);
 });
 
 module.exports = router;
