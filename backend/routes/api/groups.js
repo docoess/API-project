@@ -7,7 +7,6 @@ const { requireAuth } = require('../../utils/auth.js')
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const { Op } = require('sequelize');
-const group = require('../../db/models/group');
 
 const validateGroup = [
   check('name')
@@ -360,6 +359,8 @@ router.put('/:groupId', requireAuth, validateGroup, async (req, res, next) => {
   group.private = private;
   group.city = city;
   group.state = state;
+
+  await group.save();
 
   return res.json(group);
 });
