@@ -195,6 +195,17 @@ router.put('/:eventId', requireAuth, validateEvent, async (req, res, next) => {
     });
   }
 
+  const group = await Group.findByPk(event.groupId);
+  const organizer = group.organizerId === userId;
+
+  const membership = await Membership.findOne({
+    where: {
+      userId,
+      groupId: group.id
+    }
+  });
+  const cohost = membership.status === 'co-host';
+
   const { venueId, name, type, capacity, price, description, startDate, endDate } = req.body;
 
   const venue = await Venue.findByPk(venueId);
@@ -206,20 +217,57 @@ router.put('/:eventId', requireAuth, validateEvent, async (req, res, next) => {
     });
   }
 
-  event.set({
-    venueId,
-    name,
-    type,
-    capacity,
-    price,
-    description,
-    startDate,
-    endDate
-  });
+  if (organizer || cohost) {
+    event.set({
+      venueId,
+      name,
+      type,
+      capacity,
+      price,
+      description,
+      startDate,
+      endDate
+    });
 
-  await event.save();
+    await event.save();
+  }
 
   return res.json(event);
+
+});
+
+router.delete('/:eventId', requireAuth, async (req, res, next) => {
+  const userId = req.user.id;
+  const { eventId } = req.params;
+
+  const event = await Event.findByPk(eventId);
+
+  if (!event) {
+    res.status(404);
+    return res.json({
+      message: "Event couldn't be found"
+    });
+  }
+
+  const group = await Group.findByPk(event.groupId);
+  const organizer = group.organizerId === userId;
+
+  const membership = await Membership.findOne({
+    where: {
+      userId,
+      groupId: group.id
+    }
+  });
+
+  const cohost = membership.status === 'co-host';
+
+  if (organizer || cohost) {
+    await event.destroy();
+  }
+
+  return res.json({
+    message: "Successfully deleted"
+  });
 
 });
 
