@@ -181,6 +181,68 @@ router.get('/:groupId/events', async (req, res, next) => {
 
 });
 
+router.get('/:groupId/members', async (req, res, next) => {
+  const userId = req.user.id;
+  const { groupId } = req.params;
+
+  const groupMembers = {"Members": []};
+  let members;
+
+  const group = await Group.findByPk(groupId);
+  const reqMember = await Membership.findOne({
+    where: {
+      userId
+    }
+  });
+
+  if (!group) {
+    res.status(404);
+    return res.json({
+      message: "Group couldn't be found"
+    });
+  }
+
+  if (group.organizerId === userId || reqMember.status === 'co-host') {
+    members = await Membership.findAll({
+      where: {
+        groupId
+      }
+    });
+  } else {
+    members = await Membership.findAll({
+      where: {
+        groupId,
+        status: {
+          [Op.in]: ['co-host', 'member']
+        }
+      }
+    });
+  }
+
+  for (let member of members) {
+    let user = await User.findByPk(member.userId, {
+      attributes: ['id', 'firstName', 'lastName']
+    });
+
+    let userMembership = await Membership.findByPk(user.id);
+
+    user = user.toJSON();
+    userMembership = userMembership.toJSON();
+
+    user.Membership = {
+      "status": userMembership.status
+    };
+
+    console.log(userMembership.status);
+
+
+    groupMembers.Members.push(user);
+  }
+
+  return res.json(groupMembers);
+
+});
+
 router.get('/current', requireAuth, async (req, res, next) => {
   const userId = req.user.id;
   const modifiedGroups = { "Groups": []};
@@ -485,14 +547,14 @@ router.put('/:groupId', requireAuth, validateGroup, async (req, res, next) => {
 
   const { name, about, type, private, city, state } = req.body;
 
-  group = group.toJSON();
-
-  group.name = name;
-  group.about = about;
-  group.type = type;
-  group.private = private;
-  group.city = city;
-  group.state = state;
+  group.set({
+    name,
+    about,
+    type,
+    private,
+    city,
+    state
+  });
 
   await group.save();
 
