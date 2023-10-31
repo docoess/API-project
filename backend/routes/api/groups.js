@@ -617,7 +617,7 @@ router.put('/:groupId/membership', requireAuth, async (req, res, next) => {
       errors: {
         "memberId": "User couldn't be found"
       }
-    })
+    });
   }
 
   if (status === 'pending') {
@@ -706,7 +706,67 @@ router.put('/:groupId', requireAuth, validateGroup, async (req, res, next) => {
   return res.json(group);
 });
 
+router.delete('/:groupId/membership', requireAuth, async (req, res, next) => {
+  const userId = req.user.id;
+  const { groupId } = req.params;
 
+  const group = await Group.findByPk(groupId);
+
+  if (!group) {
+    res.status(404);
+    return res.json({
+      error: {
+        message: "Group couldn't be found"
+      }
+    });
+  }
+
+  const organizer = group.organizerId === userId;
+
+  const { memberId } = req.body;
+  const user = await User.findByPk(memberId);
+
+  if (!user) {
+    res.status(400);
+    return res.json({
+      message: 'Validation Error',
+      errors: {
+        "memberId": "User couldn't be found"
+      }
+    });
+  }
+
+  const membershipToDelete = await Membership.findOne({
+    where: {
+      userId: memberId,
+      groupId
+    }
+  });
+
+  if (!membershipToDelete) {
+    res.status(404);
+    return res.json({
+      message: 'Membership does not exist for this User'
+    });
+  }
+
+  if (!organizer && userId !== membershipToDelete.userId) {
+    res.status(403);
+    return res.json({
+      message: 'Validation Error',
+      errors: {
+        "memberId": "Only group organizer or a member themself can remove a membership"
+      }
+    });
+  }
+
+  await membershipToDelete.destroy();
+
+  return res.json({
+    message: "Successfully deleted membership from group"
+  });
+
+});
 
 router.delete('/:groupId', requireAuth, async (req, res, next) => {
   const userId = req.user.id;
@@ -721,7 +781,9 @@ router.delete('/:groupId', requireAuth, async (req, res, next) => {
         message: "Group couldn't be found"
       }
     });
-  } else if (group.organizerId === userId) {
+  }
+
+  if (group.organizerId === userId) {
     await group.destroy();
 
     return res.json({
