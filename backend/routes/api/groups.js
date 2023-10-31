@@ -11,7 +11,7 @@ const { Op } = require('sequelize');
 const validateGroup = [
   check('name')
     .notEmpty()
-    .isLength({min: 1, max: 60})
+    .isLength({max: 60})
     .withMessage('Name must be 60 characters or less'),
   check('about')
     .notEmpty()
