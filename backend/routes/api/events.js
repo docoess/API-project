@@ -8,6 +8,45 @@ const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const { Op } = require('sequelize');
 
+router.get('/:eventId', async (req, res, next) => {
+  const { eventId } = req.params;
+
+  let event = await Event.findByPk(eventId, {
+    include: [
+      {
+        model: Group,
+        attributes: ['id', 'name', 'private', 'city', 'state']
+      },
+      {
+        model: Venue,
+        attributes: ['id', 'address', 'city', 'state', 'lat', 'lng']
+      },
+      {
+        model: EventImage,
+        attributes: ['id', 'url', 'preview']
+      }
+    ]
+  });
+
+  if (!event) {
+    res.status(404);
+    return res.json({
+      message: "Event couldn't be found"
+    });
+  }
+
+  event = event.toJSON();
+
+  event.numAttending = await Attendance.count({
+    where: {
+      eventId
+    }
+  });
+
+  return res.json(event);
+
+});
+
 router.get('/', async (req, res, next) => {
   let events = await Event.findAll();
   const modifiedEvents = {"Events": []}
