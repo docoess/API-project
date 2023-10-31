@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { Group, Membership, GroupImage, Venue, User, Event } = require('../../db/models');
+const { Group, Membership, GroupImage, Venue, User, Event, Attendance, EventImage } = require('../../db/models');
 const { requireAuth } = require('../../utils/auth.js')
 
 const { check } = require('express-validator');
@@ -125,6 +125,61 @@ router.get('/:groupId/venues', requireAuth, async (req, res, next) => {
 
 });
 
+router.get('/:groupId/events', async (req, res, next) => {
+  const { groupId } = req.params;
+  const modifiedEvents = {"Events": []};
+
+  const group = await Group.findByPk(groupId, {
+    attributes: ['id', 'name', 'city', 'state']
+  });
+
+  if (!group) {
+    res.status(404);
+    return res.json({
+      message: "Group couldn't be found"
+    });
+  }
+
+  let events = await Event.findAll({
+    where: {
+      groupId
+    }
+  });
+
+  for (let event of events) {
+    const numAttending = await Attendance.count({
+      where: {
+        eventId: event.id
+      }
+    });
+
+    const previewImage = await EventImage.findOne({
+      where: {
+        eventId: event.id,
+        preview: true
+      }
+    });
+
+    const venue = await Venue.findOne({
+      where: {
+        id: event.venueId
+      },
+      attributes: ['id', 'city', 'state']
+    });
+
+    event = event.toJSON();
+
+    event.numAttending = numAttending;
+    event.previewImage = previewImage.url || null;
+    event.Group = group;
+    event.Venue = venue || null;
+
+    modifiedEvents.Events.push(event);
+  }
+
+  return res.json(modifiedEvents);
+
+});
 
 router.get('/current', requireAuth, async (req, res, next) => {
   const userId = req.user.id;
