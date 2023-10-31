@@ -517,6 +517,12 @@ router.post('/', requireAuth, validateGroup, async (req, res, next) => {
     state
   });
 
+  await Membership.create({
+    userId,
+    groupId: group.id,
+    status: 'co-host'
+  });
+
   return res.json(group);
 
 });
