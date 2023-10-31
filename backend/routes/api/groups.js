@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { Group, Membership, GroupImage, Venue, User } = require('../../db/models');
+const { Group, Membership, GroupImage, Venue, User, Event } = require('../../db/models');
 const { requireAuth } = require('../../utils/auth.js')
 
 const { check } = require('express-validator');
@@ -59,6 +59,34 @@ const validateVenue = [
     .withMessage('Longitude is not valid'),
   handleValidationErrors
 ];
+
+const validateEvent = [
+  check('venueId')
+    .exists()
+    .withMessage('Venue does not exist'),
+  check('name')
+    .exists()
+    .notEmpty()
+    .isLength({min: 5})
+    .withMessage('Name must be at least 5 characters'),
+  check('type')
+    .exists()
+    .isIn(['Online', 'In person'])
+    .withMessage('Type must be Online or In person'),
+  check('capacity')
+    .exists()
+    .isInt()
+    .withMessage('Capacity must be an integer'),
+  check('price')
+    .exists()
+    .isNumeric()
+    .withMessage('Price is invalid'),
+  check('description')
+    .exists()
+    .notEmpty()
+    .withMessage('Description is required'),
+  handleValidationErrors
+  ];
 
 router.get('/:groupId/venues', requireAuth, async (req, res, next) => {
   const userId = req.user.id;
@@ -304,6 +332,42 @@ router.post('/:groupId/images', requireAuth, async (req, res, next) => {
     preview
   });
 
+
+});
+
+router.post('/:groupId/events', requireAuth, validateEvent, async (req, res, next) => {
+  const userId = req.user.id;
+  const { groupId } = req.params;
+
+  let event;
+
+  const group = await Group.findByPk(groupId);
+  const member = await Membership.findOne({
+    where: {
+      userId,
+      groupId
+    }
+  });
+
+  const { venueId, name, type, capacity, price, description, startDate, endDate } = req.body;
+
+  if (group.organizerId === userId || member.status === 'co-host') {
+    event = await Event.create({
+      venueId,
+      groupId,
+      name,
+      type,
+      capacity,
+      price,
+      description,
+      startDate,
+      endDate
+    });
+
+    event = await Event.findByPk(event.id);
+  }
+
+  return res.json(event);
 
 });
 
