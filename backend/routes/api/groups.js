@@ -503,6 +503,53 @@ router.post('/:groupId/events', requireAuth, validateEvent, async (req, res, nex
 
 });
 
+router.post('/:groupId/membership', requireAuth, async (req, res, next) => {
+  const userId = req.user.id;
+  const { groupId } = req.params;
+
+  let newMembership;
+
+  const group = await Group.findByPk(groupId);
+
+  if (!group) {
+    res.status(404);
+    return res.json({
+      message: "Group couldn't be found"
+    });
+  }
+
+  const membership = await Membership.findOne({
+    where: {
+      userId,
+      groupId
+    }
+  });
+
+  if (membership) {
+    res.status(400);
+    if (membership.status === 'pending') {
+      return res.json({
+        message: 'Membership has already been requested'
+      });
+    } else {
+      return res.json({
+        message: "User is already a member of the group"
+      });
+    }
+  } else {
+      newMembership = await Membership.create({
+        userId,
+        groupId,
+        status: "pending"
+      });
+  }
+
+  return res.json({
+    memberId: newMembership.id,
+    status: 'pending'
+  });
+});
+
 router.post('/', requireAuth, validateGroup, async (req, res, next) => {
   const userId = req.user.id;
   const { name, about, type, private, city, state } = req.body;
