@@ -24,7 +24,7 @@ module.exports = {
       {
         eventId: 3,
         url: 'image url',
-        preview: false
+        preview: true
       },
       {
         eventId: 1,
@@ -34,12 +34,12 @@ module.exports = {
       {
         eventId: 2,
         url: 'image url',
-        preview: false
+        preview: true
       },
       {
         eventId: 4,
         url: 'image url',
-        preview: false
+        preview: true
       },
       {
         eventId: 5,
