@@ -349,7 +349,22 @@ router.post('/:groupId/events', requireAuth, validateEvent, async (req, res, nex
     }
   });
 
+  if (!group) {
+    res.status(404);
+    return res.json({
+      message: "Group couldn't be found"
+    });
+  }
+
   const { venueId, name, type, capacity, price, description, startDate, endDate } = req.body;
+
+  const venue = await Venue.findByPk(venueId);
+  if (!venue) {
+    res.status(404);
+    return res.json({
+      message: "Venue couldn't be found"
+    });
+  }
 
   if (group.organizerId === userId || member.status === 'co-host') {
     event = await Event.create({
