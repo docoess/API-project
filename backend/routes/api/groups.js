@@ -406,7 +406,7 @@ router.post('/:groupId/venues', requireAuth, validateVenue, async (req, res, nex
     });
   }
 
-  if (userId !== group.organizerId && !member) {
+  if ((userId !== group.organizerId || !member) || (member && member.status !== 'co-host')) {
     res.status(403);
     return res.json({
       message: "Only the group organizer or a co-host can add a Venue"
@@ -504,7 +504,7 @@ router.post('/:groupId/events', requireAuth, validateEvent, async (req, res, nex
     });
   }
 
-  if (userId !== group.organizerId && !member) {
+  if ((userId !== group.organizerId || !member) || (member && member.status !== 'co-host')) {
     res.status(403);
     return res.json({
       message: "Only the group organizer or a co-host can create an event"
