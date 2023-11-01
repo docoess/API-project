@@ -178,11 +178,11 @@ router.get('/', validateQueryParams, async (req, res, next) => {
   if (req.query.name) name = req.query.name.slice(1, -1);
   if (req.query.type) type = req.query.type.slice(1, -1);
 
-  if (!page || page < 1 || page > 10) {
+  if (!page || page > 10) {
     page = 1;
   }
 
-  if (!size || size < 1 || size > 20) {
+  if (!size || size > 20) {
     size = 20;
   }
 
