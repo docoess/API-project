@@ -24,7 +24,7 @@ router.delete('/:imageId', requireAuth, async (req, res, next) => {
     }
   });
 
-  if (userId !== group.organizerId && (memStatus.status !== 'co-host')) {
+  if ((userId !== group.organizerId && !memStatus) || (memStatus && memStatus.status !== 'co-host')) {
     res.status(403);
     return res.json({
       error: {
