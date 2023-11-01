@@ -324,6 +324,20 @@ router.put('/:eventId/attendance', requireAuth, async (req, res, next) => {
     });
   }
 
+  let attendance = await Attendance.findOne({
+    where: {
+      eventId,
+      userId: changedUserId
+    }
+  });
+
+  if (!attendance) {
+    res.status(404);
+    return res.json({
+      message: "Attendance between the user and the event does not exist"
+    });
+  }
+
   const group = await Group.findByPk(event.groupId);
   const organizer = group.organizerId === userId;
   const membership = await Membership.findOne({
@@ -331,6 +345,26 @@ router.put('/:eventId/attendance', requireAuth, async (req, res, next) => {
     userId
   });
   const cohost = membership.status === 'co-host';
+
+  if (!organizer && !cohost) {
+    res.status(403);
+    return res.json({
+      message: "Only an organizer or co-host can change a membership status"
+    });
+  }
+
+  attendance.set({
+    status: changedStatus
+  });
+
+  await attendance.save();
+
+  return res.json({
+    id: attendance.id,
+    eventId,
+    userId: changedUserId,
+    status: changedStatus
+  });
 
 });
 
