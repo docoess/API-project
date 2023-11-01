@@ -245,9 +245,6 @@ router.get('/:groupId/members', async (req, res, next) => {
       "status": userMembership.status
     };
 
-    console.log(userMembership.status);
-
-
     groupMembers.Members.push(user);
   }
 

@@ -178,8 +178,6 @@ router.get('/', validateQueryParams, async (req, res, next) => {
   if (req.query.name) name = req.query.name.slice(1, -1);
   if (req.query.type) type = req.query.type.slice(1, -1);
 
-  console.log(type, name)
-
   if (!page || page < 1 || page > 10) {
     page = 1;
   }
@@ -346,8 +344,6 @@ router.post('/:eventId/attendance', requireAuth, async (req, res, next) => {
   const group = await Group.findByPk(event.groupId);
   let membership;
 
-  console.log('groupid', group.id);
-
   if (group) {
     membership = await Membership.findOne({
       where: {
@@ -443,8 +439,6 @@ router.put('/:eventId/attendance', requireAuth, async (req, res, next) => {
   if (membership) {
     cohost = membership.status === 'co-host';
   }
-
-  console.log('========MEMBERSHIP=======', membership);
 
   if (!membership) {
     res.status(403);
