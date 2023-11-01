@@ -45,6 +45,15 @@ router.delete('/:imageId', requireAuth, async (req, res, next) => {
     member = memStatus.status === 'co-host';
   }
 
+  if (!groupOrg && !member) {
+    res.status(403);
+    return res.json({
+      error: {
+        message: "Not authorized"
+      }
+    });
+  }
+
   if (member || groupOrg) {
     await eventImage.destroy();
   }

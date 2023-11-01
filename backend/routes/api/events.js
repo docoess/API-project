@@ -459,6 +459,15 @@ router.put('/:eventId', requireAuth, validateEvent, async (req, res, next) => {
     });
   }
 
+  if (!organizer && !cohost) {
+    res.status(403);
+    return res.json({
+      error: {
+        message: "Not authorized"
+      }
+    });
+  }
+
   if (organizer || cohost) {
     event.set({
       venueId,
@@ -550,6 +559,15 @@ router.delete('/:eventId', requireAuth, async (req, res, next) => {
   });
 
   const cohost = membership.status === 'co-host';
+
+  if (!organizer && !cohost) {
+    res.status(403);
+    return res.json({
+      error: {
+        message: "Not authorized"
+      }
+    });
+  }
 
   if (organizer || cohost) {
     await event.destroy();

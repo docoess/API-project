@@ -53,6 +53,15 @@ router.put('/:venueId', requireAuth, validateVenue, async (req, res, next) => {
     }
   });
 
+  if (userId !== group.organizerId && memStatus.status !== 'co-host') {
+    res.status(403);
+    return res.json({
+      error: {
+        message: "Not authorized"
+      }
+    });
+  }
+
   if (group.organizerId === userId || memStatus.status === 'co-host') {
     venue.address = address;
     venue.city = city;

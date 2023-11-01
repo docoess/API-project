@@ -108,6 +108,13 @@ router.get('/:groupId/venues', requireAuth, async (req, res, next) => {
     });
   }
 
+  if (userId !== group.organizerId && memStatus.status !== 'co-host') {
+    res.status(403);
+    return res.json({
+      message: "Only the group organizer or a co-host can view all venues for a group"
+    })
+  }
+
   if (group.organizerId === userId || memStatus.status === 'co-host') {
     venues = await Venue.findAll({
       where: {
@@ -394,6 +401,13 @@ router.post('/:groupId/venues', requireAuth, validateVenue, async (req, res, nex
     });
   }
 
+  if (userId !== group.organizerId && member.status !== 'co-host') {
+    res.status(403);
+    return res.json({
+      message: "Only the group organizer or a co-host can add a Venue"
+    });
+  }
+
   if (group.organizerId === userId || member.status === 'co-host') {
     venue = await Venue.create({
       groupId,
@@ -480,6 +494,13 @@ router.post('/:groupId/events', requireAuth, validateEvent, async (req, res, nex
     res.status(404);
     return res.json({
       message: "Venue couldn't be found"
+    });
+  }
+
+  if (userId !== group.organizerId && member.status !== 'co-host') {
+    res.status(403);
+    return res.json({
+      message: "Only the group organizer or a co-host can create an event"
     });
   }
 
