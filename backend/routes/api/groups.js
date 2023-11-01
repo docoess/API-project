@@ -789,6 +789,13 @@ router.delete('/:groupId', requireAuth, async (req, res, next) => {
     });
   }
 
+  if (userId !== group.organizerId) {
+    res.status(403);
+    return res.json({
+      message: "Only the group organizer can delete a Group"
+    });
+  }
+
   if (group.organizerId === userId) {
     await group.destroy();
 
