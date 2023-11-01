@@ -24,7 +24,12 @@ router.delete('/:imageId', requireAuth, async (req, res, next) => {
     }
   });
 
-  if ((userId !== group.organizerId) || (memStatus && memStatus.status !== 'co-host')) {
+  let cohost;
+  if (memStatus) {
+    cohost = memStatus.status === 'co-host';
+  }
+
+  if (userId !== group.organizerId && !cohost) {
     res.status(403);
     return res.json({
       error: {
@@ -33,7 +38,7 @@ router.delete('/:imageId', requireAuth, async (req, res, next) => {
     });
   }
 
-  if (group.organizerId === userId || memStatus.status === 'co-host') {
+  if (group.organizerId === userId || cohost) {
     await groupImage.destroy();
   }
 
