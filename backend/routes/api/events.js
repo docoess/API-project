@@ -338,6 +338,14 @@ router.post('/:eventId/attendance', requireAuth, async (req, res, next) => {
     }
   });
 
+  const group = Group.findByPk(event.groupId);
+  const membership = Membership.findOne({
+    where: {
+      userId,
+      groupId: group.id
+    }
+  });
+
   if (attendance) {
     res.status(400);
 
@@ -350,6 +358,13 @@ router.post('/:eventId/attendance', requireAuth, async (req, res, next) => {
         message: "User is already an attendee of the event"
       });
     }
+  } else if (membership.status === 'pending') {
+    res.status(403);
+    return res.json({
+      error: {
+        message: "Not authorized"
+      }
+    });
   } else {
     await Attendance.create({
       eventId,
