@@ -300,13 +300,21 @@ router.post('/:eventId/images', requireAuth, async (req, res, next) => {
       url,
       preview
     });
+
+    eventImage = await EventImage.findByPk(eventImage.id, {
+      attributes: {
+        exclude: ['eventId']
+      }
+    });
+  } else {
+    res.status(403);
+    return res.json({
+      error: {
+        message: "Not authorized"
+      }
+    });
   }
 
-  eventImage = await EventImage.findByPk(eventImage.id, {
-    attributes: {
-      exclude: ['eventId']
-    }
-  });
 
   return res.json(eventImage);
 });
