@@ -424,7 +424,9 @@ router.post('/:groupId/venues', requireAuth, validateVenue, async (req, res, nex
     });
   }
 
-  venue = await Venue.findByPk(venue.id);
+  if (venue) {
+    venue = await Venue.findByPk(venue.id);
+  }
 
   return res.json(venue);
 
