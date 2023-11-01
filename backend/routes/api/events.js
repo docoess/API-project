@@ -173,9 +173,10 @@ router.get('/:eventId/attendees', async (req, res, next) => {
 router.get('/', validateQueryParams, async (req, res, next) => {
 
   let { page, size} = req.query;
-  let startDate  = req.query.startDate.slice(1, -1);
-  let name = req.query.name.slice(1, -1);
-  let type = req.query.type.slice(1, -1);
+  let name, type, startDate;
+  if (req.query.startDate) startDate  = req.query.startDate.slice(1, -1);
+  if (req.query.name) name = req.query.name.slice(1, -1);
+  if (req.query.type) type = req.query.type.slice(1, -1);
 
   console.log(type, name)
 
