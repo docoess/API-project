@@ -422,6 +422,54 @@ router.put('/:eventId', requireAuth, validateEvent, async (req, res, next) => {
 
 });
 
+router.delete('/:eventId/attendance', requireAuth, async (req, res, next) => {
+  const userId = req.user.id;
+  const { eventId } = req.params;
+
+  const userToDelete = req.body.userId;
+
+  const event = await Event.findByPk(eventId);
+
+  if (!event) {
+    res.status(404);
+    return res.json({
+      message: "Event couldn't be found"
+    });
+  }
+
+  const attendance = await Attendance.findOne({
+    where: {
+      eventId,
+      userId: userToDelete
+    }
+  });
+
+  if (!attendance) {
+    res.status(404);
+    return res.json({
+      message: 'Attendance does not exist for this user'
+    });
+  }
+
+  const group = await Group.findByPk(event.groupId);
+
+  const organizer = group.organizerId === userId;
+
+  if (!organizer && userId !== userToDelete) {
+    res.status(403);
+    return res.json({
+      message: "Only the User or organizer may delete an Attendance"
+    });
+  }
+
+  await attendance.destroy();
+
+  return res.json({
+    message: "Successfully deleted attendance from event"
+  });
+
+});
+
 router.delete('/:eventId', requireAuth, async (req, res, next) => {
   const userId = req.user.id;
   const { eventId } = req.params;
