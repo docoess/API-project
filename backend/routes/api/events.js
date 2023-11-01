@@ -36,6 +36,28 @@ const validateEvent = [
   handleValidationErrors
   ];
 
+  validateQueryParams = [
+    check('page')
+      .optional({
+        values: 'undefined'
+      })
+      .isInt({min: 1})
+      .withMessage('Page must be greater than or equal to 1'),
+    check('size')
+      .optional()
+      .isInt({min: 1})
+      .withMessage('Size must be greater than or equal to 1'),
+    check('name')
+      .optional()
+      .isString()
+      .withMessage('Name must be a string'),
+    check('type')
+      .optional()
+      .isIn(['Online', 'In person'])
+      .withMessage('Type must be Online or In person'),
+    handleValidationErrors
+  ];
+
 router.get('/:eventId', async (req, res, next) => {
   const { eventId } = req.params;
 
@@ -148,8 +170,42 @@ router.get('/:eventId/attendees', async (req, res, next) => {
 
 });
 
-router.get('/', async (req, res, next) => {
-  let events = await Event.findAll();
+router.get('/', validateQueryParams, async (req, res, next) => {
+
+  let { page, size, name, type, startDate } = req.query;
+
+  if (!page || page < 1 || page > 10) {
+    page = 1;
+  }
+
+  if (!size || size < 1 || size > 20) {
+    size = 20;
+  }
+
+  let pagination = {};
+
+  pagination.limit = size;
+  pagination.offset = size * (page - 1);
+
+  let where = {};
+
+  if (name) {
+    where.name = name;
+  }
+
+  if (type) {
+    where.type = type;
+  }
+
+  if (startDate) {
+    const actualStartDate = startDate.slice(1, -1);
+    where.startDate = actualStartDate;
+  }
+
+  let events = await Event.findAll({
+    where,
+    ...pagination
+  });
   const modifiedEvents = {"Events": []}
 
   for (let event of events) {
@@ -324,6 +380,20 @@ router.put('/:eventId/attendance', requireAuth, async (req, res, next) => {
     });
   }
 
+  let attendance = await Attendance.findOne({
+    where: {
+      eventId,
+      userId: changedUserId
+    }
+  });
+
+  if (!attendance) {
+    res.status(404);
+    return res.json({
+      message: "Attendance between the user and the event does not exist"
+    });
+  }
+
   const group = await Group.findByPk(event.groupId);
   const organizer = group.organizerId === userId;
   const membership = await Membership.findOne({
@@ -331,6 +401,26 @@ router.put('/:eventId/attendance', requireAuth, async (req, res, next) => {
     userId
   });
   const cohost = membership.status === 'co-host';
+
+  if (!organizer && !cohost) {
+    res.status(403);
+    return res.json({
+      message: "Only an organizer or co-host can change a membership status"
+    });
+  }
+
+  attendance.set({
+    status: changedStatus
+  });
+
+  await attendance.save();
+
+  return res.json({
+    id: attendance.id,
+    eventId,
+    userId: changedUserId,
+    status: changedStatus
+  });
 
 });
 
@@ -385,6 +475,54 @@ router.put('/:eventId', requireAuth, validateEvent, async (req, res, next) => {
   }
 
   return res.json(event);
+
+});
+
+router.delete('/:eventId/attendance', requireAuth, async (req, res, next) => {
+  const userId = req.user.id;
+  const { eventId } = req.params;
+
+  const userToDelete = req.body.userId;
+
+  const event = await Event.findByPk(eventId);
+
+  if (!event) {
+    res.status(404);
+    return res.json({
+      message: "Event couldn't be found"
+    });
+  }
+
+  const attendance = await Attendance.findOne({
+    where: {
+      eventId,
+      userId: userToDelete
+    }
+  });
+
+  if (!attendance) {
+    res.status(404);
+    return res.json({
+      message: 'Attendance does not exist for this user'
+    });
+  }
+
+  const group = await Group.findByPk(event.groupId);
+
+  const organizer = group.organizerId === userId;
+
+  if (!organizer && userId !== userToDelete) {
+    res.status(403);
+    return res.json({
+      message: "Only the User or organizer may delete an Attendance"
+    });
+  }
+
+  await attendance.destroy();
+
+  return res.json({
+    message: "Successfully deleted attendance from event"
+  });
 
 });
 
