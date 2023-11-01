@@ -36,6 +36,28 @@ const validateEvent = [
   handleValidationErrors
   ];
 
+  validateQueryParams = [
+    check('page')
+      .optional({
+        values: 'undefined'
+      })
+      .isInt({min: 1})
+      .withMessage('Page must be greater than or equal to 1'),
+    check('size')
+      .optional()
+      .isInt({min: 1})
+      .withMessage('Size must be greater than or equal to 1'),
+    check('name')
+      .optional()
+      .isString()
+      .withMessage('Name must be a string'),
+    check('type')
+      .optional()
+      .isIn(['Online', 'In person'])
+      .withMessage('Type must be Online or In person'),
+    handleValidationErrors
+  ];
+
 router.get('/:eventId', async (req, res, next) => {
   const { eventId } = req.params;
 
@@ -148,8 +170,42 @@ router.get('/:eventId/attendees', async (req, res, next) => {
 
 });
 
-router.get('/', async (req, res, next) => {
-  let events = await Event.findAll();
+router.get('/', validateQueryParams, async (req, res, next) => {
+
+  let { page, size, name, type, startDate } = req.query;
+
+  if (!page || page < 1 || page > 10) {
+    page = 1;
+  }
+
+  if (!size || size < 1 || size > 20) {
+    size = 20;
+  }
+
+  let pagination = {};
+
+  pagination.limit = size;
+  pagination.offset = size * (page - 1);
+
+  let where = {};
+
+  if (name) {
+    where.name = name;
+  }
+
+  if (type) {
+    where.type = type;
+  }
+
+  if (startDate) {
+    const actualStartDate = startDate.slice(1, -1);
+    where.startDate = actualStartDate;
+  }
+
+  let events = await Event.findAll({
+    where,
+    ...pagination
+  });
   const modifiedEvents = {"Events": []}
 
   for (let event of events) {
