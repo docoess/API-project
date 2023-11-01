@@ -108,7 +108,7 @@ router.get('/:groupId/venues', requireAuth, async (req, res, next) => {
     });
   }
 
-  if (userId !== group.organizerId && memStatus.status !== 'co-host') {
+  if (userId !== group.organizerId && !memStatus) {
     res.status(403);
     return res.json({
       message: "Only the group organizer or a co-host can view all venues for a group"
@@ -202,6 +202,11 @@ router.get('/:groupId/members', async (req, res, next) => {
     }
   });
 
+  let cohost;
+  if (reqMember) {
+    cohost = reqMember.status === 'co-host';
+  }
+
   if (!group) {
     res.status(404);
     return res.json({
@@ -209,7 +214,7 @@ router.get('/:groupId/members', async (req, res, next) => {
     });
   }
 
-  if (group.organizerId === userId || reqMember.status === 'co-host') {
+  if (group.organizerId === userId || cohost) {
     members = await Membership.findAll({
       where: {
         groupId
@@ -401,7 +406,7 @@ router.post('/:groupId/venues', requireAuth, validateVenue, async (req, res, nex
     });
   }
 
-  if (userId !== group.organizerId && member.status !== 'co-host') {
+  if (userId !== group.organizerId && !member) {
     res.status(403);
     return res.json({
       message: "Only the group organizer or a co-host can add a Venue"
@@ -497,7 +502,7 @@ router.post('/:groupId/events', requireAuth, validateEvent, async (req, res, nex
     });
   }
 
-  if (userId !== group.organizerId && member.status !== 'co-host') {
+  if (userId !== group.organizerId && !member) {
     res.status(403);
     return res.json({
       message: "Only the group organizer or a co-host can create an event"
@@ -616,7 +621,10 @@ router.put('/:groupId/membership', requireAuth, async (req, res, next) => {
   });
 
   const organizer = group.organizerId === userId;
-  const cohost = authUserMembership.status === 'co-host';
+  let cohost;
+  if (authUserMembership) {
+    cohost = authUserMembership.status === 'co-host';
+  }
 
   const { memberId, status } = req.body;
 

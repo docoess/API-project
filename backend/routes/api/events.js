@@ -33,6 +33,10 @@ const validateEvent = [
     .exists()
     .notEmpty()
     .withMessage('Description is required'),
+  check('type')
+    .optional()
+    .isIn(["Online", 'In person'])
+    .withMessage('Type must be Online or In person'),
   handleValidationErrors
   ];
 
@@ -51,10 +55,6 @@ const validateEvent = [
       .optional()
       .isString()
       .withMessage('Name must be a string'),
-    check('type')
-      .optional()
-      .isIn(['Online', 'In person'])
-      .withMessage('Type must be Online or In person'),
     handleValidationErrors
   ];
 
@@ -172,7 +172,12 @@ router.get('/:eventId/attendees', async (req, res, next) => {
 
 router.get('/', validateQueryParams, async (req, res, next) => {
 
-  let { page, size, name, type, startDate } = req.query;
+  let { page, size} = req.query;
+  let startDate  = req.query.startDate.slice(1, -1);
+  let name = req.query.name.slice(1, -1);
+  let type = req.query.type.slice(1, -1);
+
+  console.log(type, name)
 
   if (!page || page < 1 || page > 10) {
     page = 1;
@@ -198,8 +203,7 @@ router.get('/', validateQueryParams, async (req, res, next) => {
   }
 
   if (startDate) {
-    const actualStartDate = startDate.slice(1, -1);
-    where.startDate = actualStartDate;
+    where.startDate = startDate;
   }
 
   let events = await Event.findAll({
@@ -338,13 +342,19 @@ router.post('/:eventId/attendance', requireAuth, async (req, res, next) => {
     }
   });
 
-  const group = Group.findByPk(event.groupId);
-  const membership = Membership.findOne({
-    where: {
-      userId,
-      groupId: group.id
-    }
-  });
+  const group = await Group.findByPk(event.groupId);
+  let membership;
+
+  console.log('groupid', group.id);
+
+  if (group) {
+    membership = await Membership.findOne({
+      where: {
+        userId,
+        groupId: group.id
+      }
+    });
+  }
 
   if (attendance) {
     res.status(400);
@@ -358,20 +368,22 @@ router.post('/:eventId/attendance', requireAuth, async (req, res, next) => {
         message: "User is already an attendee of the event"
       });
     }
-  } else if (membership.status === 'pending') {
+  }
+
+  if (!membership || membership.status === 'pending') {
     res.status(403);
     return res.json({
       error: {
         message: "Not authorized"
       }
     });
-  } else {
-    await Attendance.create({
-      eventId,
-      userId,
-      status: 'pending'
-    });
   }
+
+  await Attendance.create({
+    eventId,
+    userId,
+    status: 'pending'
+  });
 
   return res.json({
     userId,
@@ -420,10 +432,27 @@ router.put('/:eventId/attendance', requireAuth, async (req, res, next) => {
   const group = await Group.findByPk(event.groupId);
   const organizer = group.organizerId === userId;
   const membership = await Membership.findOne({
-    groupId: group.id,
-    userId
+    where: {
+      groupId: group.id,
+      userId
+    }
   });
-  const cohost = membership.status === 'co-host';
+
+  let cohost;
+  if (membership) {
+    cohost = membership.status === 'co-host';
+  }
+
+  console.log('========MEMBERSHIP=======', membership);
+
+  if (!membership) {
+    res.status(403);
+    return res.json({
+      error: {
+        message: "Not authorized"
+      }
+    });
+  }
 
   if (!organizer && !cohost) {
     res.status(403);
@@ -432,11 +461,14 @@ router.put('/:eventId/attendance', requireAuth, async (req, res, next) => {
     });
   }
 
-  attendance.set({
-    status: changedStatus
-  });
+  if (organizer || cohost) {
+    attendance.set({
+      status: changedStatus
+    });
 
-  await attendance.save();
+    await attendance.save();
+  }
+
 
   return res.json({
     id: attendance.id,
@@ -469,7 +501,11 @@ router.put('/:eventId', requireAuth, validateEvent, async (req, res, next) => {
       groupId: group.id
     }
   });
-  const cohost = membership.status === 'co-host';
+
+  let cohost;
+  if (membership) {
+    cohost = membership.status === 'co-host';
+  }
 
   const { venueId, name, type, capacity, price, description, startDate, endDate } = req.body;
 
@@ -581,7 +617,10 @@ router.delete('/:eventId', requireAuth, async (req, res, next) => {
     }
   });
 
-  const cohost = membership.status === 'co-host';
+  let cohost;
+  if (membership) {
+    cohost = membership.status === 'co-host';
+  }
 
   if (!organizer && !cohost) {
     res.status(403);

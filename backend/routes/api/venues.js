@@ -53,7 +53,7 @@ router.put('/:venueId', requireAuth, validateVenue, async (req, res, next) => {
     }
   });
 
-  if (userId !== group.organizerId && memStatus.status !== 'co-host') {
+  if (userId !== group.organizerId && !memStatus) {
     res.status(403);
     return res.json({
       error: {
