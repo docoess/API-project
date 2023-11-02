@@ -4,89 +4,8 @@ const router = express.Router();
 const { Group, Membership, GroupImage, Venue, User, Event, Attendance, EventImage } = require('../../db/models');
 const { requireAuth } = require('../../utils/auth.js')
 
-const { check } = require('express-validator');
-const { handleValidationErrors } = require('../../utils/validation');
 const { Op } = require('sequelize');
-
-const validateGroup = [
-  check('name')
-    .notEmpty()
-    .isLength({max: 60})
-    .withMessage('Name must be 60 characters or less'),
-  check('about')
-    .notEmpty()
-    .isLength({min: 50})
-    .withMessage('About must be 50 characters or more'),
-  check('type')
-    .notEmpty()
-    .isIn(['Online', 'In person'])
-    .withMessage("Type must be 'Online' or 'In person'"),
-  check('private')
-    .notEmpty()
-    .isBoolean()
-    .withMessage('Private must be a boolean'),
-  check('city')
-    .exists()
-    .notEmpty()
-    .withMessage('City is required'),
-  check('state')
-    .exists()
-    .notEmpty()
-    .withMessage('State is required'),
-  handleValidationErrors
-];
-
-const validateVenue = [
-  check('address')
-    .exists()
-    .notEmpty()
-    .withMessage('Street address is required'),
-  check('city')
-    .exists()
-    .notEmpty()
-    .withMessage('City is required'),
-  check('state')
-    .exists()
-    .notEmpty()
-    .withMessage('State is required'),
-  check('lat')
-    .exists()
-    .isDecimal()
-    .withMessage('Latitude is not valid'),
-  check('lng')
-    .exists()
-    .isDecimal()
-    .withMessage('Longitude is not valid'),
-  handleValidationErrors
-];
-
-const validateEvent = [
-  check('venueId')
-    .exists()
-    .withMessage('Venue does not exist'),
-  check('name')
-    .exists()
-    .notEmpty()
-    .isLength({min: 5})
-    .withMessage('Name must be at least 5 characters'),
-  check('type')
-    .exists()
-    .isIn(['Online', 'In person'])
-    .withMessage('Type must be Online or In person'),
-  check('capacity')
-    .exists()
-    .isInt()
-    .withMessage('Capacity must be an integer'),
-  check('price')
-    .exists()
-    .isNumeric()
-    .withMessage('Price is invalid'),
-  check('description')
-    .exists()
-    .notEmpty()
-    .withMessage('Description is required'),
-  handleValidationErrors
-  ];
+const { validateEvent, validateGroup, validateVenue } = require('../../utils/custom-validations.js');
 
 router.get('/:groupId/venues', requireAuth, async (req, res, next) => {
   const userId = req.user.id;
@@ -111,11 +30,11 @@ router.get('/:groupId/venues', requireAuth, async (req, res, next) => {
   }
 
   if (!group) {
-    res.status(404)
-    return res.json({
-      message: "Group couldn't be found"
-    });
-  }
+      res.status(404)
+      return res.json({
+        message: "Group couldn't be found"
+      });
+    }
 
   if ((userId !== group.organizerId || !memStatus) && (memStatus && memStatus.status !== 'co-host')) {
     res.status(403);
@@ -150,11 +69,11 @@ router.get('/:groupId/events', async (req, res, next) => {
   });
 
   if (!group) {
-    res.status(404);
-    return res.json({
-      message: "Group couldn't be found"
-    });
-  }
+      res.status(404)
+      return res.json({
+        message: "Group couldn't be found"
+      });
+    }
 
   let events = await Event.findAll({
     where: {
@@ -217,11 +136,11 @@ router.get('/:groupId/members', async (req, res, next) => {
   }
 
   if (!group) {
-    res.status(404);
-    return res.json({
-      message: "Group couldn't be found"
-    });
-  }
+      res.status(404)
+      return res.json({
+        message: "Group couldn't be found"
+      });
+    }
 
   if (group.organizerId === userId || cohost) {
     members = await Membership.findAll({
@@ -315,11 +234,11 @@ router.get('/:groupId', async (req, res) => {
   let group = await Group.findByPk(groupId);
 
   if (!group) {
-    res.status(404)
-    return res.json({
-      message: "Group couldn't be found"
-    });
-  }
+      res.status(404)
+      return res.json({
+        message: "Group couldn't be found"
+      });
+    }
 
   group = group.toJSON();
 

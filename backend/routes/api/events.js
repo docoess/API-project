@@ -4,59 +4,8 @@ const router = express.Router();
 const { Event, Attendance, Group, Venue, EventImage, Membership, User } = require('../../db/models');
 const { requireAuth } = require('../../utils/auth.js')
 
-const { check } = require('express-validator');
-const { handleValidationErrors } = require('../../utils/validation');
 const { Op } = require('sequelize');
-
-const validateEvent = [
-  check('venueId')
-    .exists()
-    .withMessage('Venue does not exist'),
-  check('name')
-    .exists()
-    .notEmpty()
-    .isLength({min: 5})
-    .withMessage('Name must be at least 5 characters'),
-  check('type')
-    .exists()
-    .isIn(['Online', 'In person'])
-    .withMessage('Type must be Online or In person'),
-  check('capacity')
-    .exists()
-    .isInt()
-    .withMessage('Capacity must be an integer'),
-  check('price')
-    .exists()
-    .isNumeric()
-    .withMessage('Price is invalid'),
-  check('description')
-    .exists()
-    .notEmpty()
-    .withMessage('Description is required'),
-  check('type')
-    .optional()
-    .isIn(["Online", 'In person'])
-    .withMessage('Type must be Online or In person'),
-  handleValidationErrors
-  ];
-
-  validateQueryParams = [
-    check('page')
-      .optional({
-        values: 'undefined'
-      })
-      .isInt({min: 1})
-      .withMessage('Page must be greater than or equal to 1'),
-    check('size')
-      .optional()
-      .isInt({min: 1})
-      .withMessage('Size must be greater than or equal to 1'),
-    check('name')
-      .optional()
-      .isString()
-      .withMessage('Name must be a string'),
-    handleValidationErrors
-  ];
+const { validateEvent, validateQueryParams } = require('../../utils/custom-validations.js');
 
 router.get('/:eventId', async (req, res, next) => {
   const { eventId } = req.params;
