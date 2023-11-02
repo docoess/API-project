@@ -101,6 +101,15 @@ router.get('/:groupId/venues', requireAuth, async (req, res, next) => {
     }
   });
 
+  if (!memStatus) {
+    res.status(403);
+    return res.json({
+      error: {
+        message: "Not authorized"
+      }
+    });
+  }
+
   if (!group) {
     res.status(404)
     return res.json({
