@@ -96,10 +96,6 @@ const validateEvent = [
       .optional()
       .isString()
       .withMessage('Name must be a string'),
-    check('type')
-      .optional()
-      .isIn(['Online', 'In person'])
-      .withMessage('Type must be Online or In person'),
     handleValidationErrors
   ];
 
