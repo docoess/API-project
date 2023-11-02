@@ -36,8 +36,7 @@ router.delete('/:imageId', requireAuth, async (req, res, next) => {
 
   const memStatus = await Membership.findOne({
     where: {
-      userId,
-      groupId: group.id
+      userId
     }
   });
 
