@@ -4,32 +4,7 @@ const router = express.Router();
 const { Group, Membership, Venue } = require('../../db/models');
 const { requireAuth } = require('../../utils/auth.js')
 
-const { check } = require('express-validator');
-const { handleValidationErrors } = require('../../utils/validation');
-
-const validateVenue = [
-  check('address')
-    .exists()
-    .notEmpty()
-    .withMessage('Street address is required'),
-  check('city')
-    .exists()
-    .notEmpty()
-    .withMessage('City is required'),
-  check('state')
-    .exists()
-    .notEmpty()
-    .withMessage('State is required'),
-  check('lat')
-    .exists()
-    .isDecimal()
-    .withMessage('Latitude is not valid'),
-  check('lng')
-    .exists()
-    .isDecimal()
-    .withMessage('Longitude is not valid'),
-  handleValidationErrors
-];
+const { validateVenue } = require('../../utils/custom-validations.js');
 
 router.put('/:venueId', requireAuth, validateVenue, async (req, res, next) => {
   const userId = req.user.id;
@@ -52,6 +27,15 @@ router.put('/:venueId', requireAuth, validateVenue, async (req, res, next) => {
       userId
     }
   });
+
+  if (!memStatus) {
+    res.status(403);
+    return res.json({
+      error: {
+        message: "Not authorized"
+      }
+    });
+  }
 
   if (group.organizerId === userId || memStatus.status === 'co-host') {
     venue.address = address;
