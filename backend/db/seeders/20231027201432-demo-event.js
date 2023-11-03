@@ -29,8 +29,8 @@ module.exports = {
         type: 'Online',
         capacity: 10,
         price: 5,
-        startDate: '2023-11-26 16:00:00',
-        endDate: '2023-11-26 21:00:00'
+        startDate: '2050-11-26 16:00:00',
+        endDate: '2050-11-26 21:00:00'
       },
       {
         venueId: null,
@@ -40,8 +40,8 @@ module.exports = {
         type: 'Online',
         capacity: 8,
         price: 2,
-        startDate: '2023-12-26 12:00:00',
-        endDate: '2023-12-29 12:00:00'
+        startDate: '2050-12-26 12:00:00',
+        endDate: '2050-12-29 12:00:00'
       },
       {
         venueId: 3,
@@ -51,8 +51,8 @@ module.exports = {
         type: 'In person',
         capacity: 700,
         price: 1000,
-        startDate: '2023-12-31 23:59:00',
-        endDate: '2024-01-01 00:01:00'
+        startDate: '2050-12-31 23:59:00',
+        endDate: '2051-01-01 00:01:00'
       },
       {
         venueId: 4,
@@ -62,8 +62,8 @@ module.exports = {
         type: 'In person',
         capacity: 42,
         price: 50,
-        startDate: '2024-03-15 12:00:00',
-        endDate: '2024-03-15 12:15:00'
+        startDate: '2050-03-15 12:00:00',
+        endDate: '2050-03-15 12:15:00'
       },
       {
         venueId: 5,
@@ -130,6 +130,50 @@ module.exports = {
         price: 99,
         startDate: '2050-04-01 12:00:00',
         endDate:  '2050-04-01 19::00:00'
+      },
+      {
+        venueId: null,
+        groupId: 1,
+        name: 'Coding 102: Continuing Getting Started',
+        description: 'Learn some intermediate skills for JavaScript with us!',
+        type: 'Online',
+        capacity: 10,
+        price: 5,
+        startDate: '2050-12-03 16:00:00',
+        endDate: '2050-12-03 21:00:00'
+      },
+      {
+        venueId: null,
+        groupId: 1,
+        name: 'Coding 103: Getting Started With Node',
+        description: 'Learn the basics of Node.js and even JavaScript stuff with us!',
+        type: 'Online',
+        capacity: 10,
+        price: 5,
+        startDate: '2050-12-10 16:00:00',
+        endDate: '2050-12-10 21:00:00'
+      },
+      {
+        venueId: null,
+        groupId: 1,
+        name: 'Coding 201: Getting Started with Python',
+        description: 'Learn the basics of Python with us!',
+        type: 'Online',
+        capacity: 10,
+        price: 5,
+        startDate: '2050-12-17 16:00:00',
+        endDate: '2050-12-17 21:00:00'
+      },
+      {
+        venueId: null,
+        groupId: 1,
+        name: 'Xmas Eve Coding Party',
+        description: 'Come build a Christmas webpage using what you have learned so far!',
+        type: 'Online',
+        capacity: 10,
+        price: 5,
+        startDate: '2050-12-24 16:00:00',
+        endDate: '2050-12-24 21:00:00'
       }
     ], { validate: true });
   },
