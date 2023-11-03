@@ -71,6 +71,61 @@ module.exports = {
         url: 'image url',
         preview: true
       },
+      {
+        eventId: 11,
+        url: 'image url',
+        preview: true
+      },
+      {
+        eventId: 12,
+        url: 'image url',
+        preview: true
+      },
+      {
+        eventId: 13,
+        url: 'image url',
+        preview: true
+      },
+      {
+        eventId: 14,
+        url: 'image url',
+        preview: true
+      },
+      {
+        eventId: 15,
+        url: 'image url',
+        preview: true
+      },
+      {
+        eventId: 16,
+        url: 'image url',
+        preview: true
+      },
+      {
+        eventId: 17,
+        url: 'image url',
+        preview: true
+      },
+      {
+        eventId: 18,
+        url: 'image url',
+        preview: true
+      },
+      {
+        eventId: 19,
+        url: 'image url',
+        preview: true
+      },
+      {
+        eventId: 20,
+        url: 'image url',
+        preview: true
+      },
+      {
+        eventId: 21,
+        url: 'image url',
+        preview: true
+      }
     ], { validate: true });
   },
 
