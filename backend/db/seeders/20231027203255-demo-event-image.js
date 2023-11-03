@@ -137,9 +137,8 @@ module.exports = {
      * await queryInterface.bulkDelete('People', null, {});
      */
     options.tableName = 'EventImages';
-    const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      eventId: { [Op.in]: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
+      preview: true
     }, {});
   }
 };
