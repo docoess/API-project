@@ -75,6 +75,61 @@ module.exports = {
         price: 5,
         startDate: '2050-05-05 05:00:00',
         endDate:  '2050-05-05 17:00:00'
+      },
+      {
+        venueId: 10,
+        groupId: 10,
+        name: 'The Big One',
+        description: 'Come grab your share of the loot! We guarantee it will be worth your while.',
+        type: 'In person',
+        capacity: 86,
+        price: 0,
+        startDate: '2073-11-11 11:00:00',
+        endDate:  '2073-11-13 13:00:00'
+      },
+      {
+        venueId: null,
+        groupId: 6,
+        name: 'Bacon Ipsum?',
+        description: 'What is all this we are hearing about Bacon Ipsum?',
+        type: 'Online',
+        capacity: 120,
+        price: 12,
+        startDate: '2040-12-12 15:00:00',
+        endDate:  '2040-12-15 17:30:00'
+      },
+      {
+        venueId: 7,
+        groupId: 7,
+        name: 'Woodstock 2054',
+        description: 'The event of the century! Come see holographic Jimi and the rest!',
+        type: 'In person',
+        capacity: 3000,
+        price: 450,
+        startDate: '2054-09-25 13:00:00',
+        endDate:  '2054-09-30 23:59:00'
+      },
+      {
+        venueId: 6,
+        groupId: 8,
+        name: 'We have no clue',
+        description: 'Come do random stuff! We have 0 idea what this club is, and this event proves that!',
+        type: 'Online',
+        capacity: 20,
+        price: 10,
+        startDate: '2040-06-25 12:00:00',
+        endDate:  '2040-06-25 17:00:00'
+      },
+      {
+        venueId: 9,
+        groupId: 9,
+        name: 'Upgrade Party',
+        description: 'Come get those servos fixed! Get a patch for that bug! Get a new OS! Anything!!!',
+        type: 'In person',
+        capacity: 42,
+        price: 99,
+        startDate: '2050-04-01 12:00:00',
+        endDate:  '2050-04-01 19::00:00'
       }
     ], { validate: true });
   },

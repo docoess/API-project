@@ -55,6 +55,31 @@ module.exports = {
         userId: 3,
         groupId: 3,
         status: 'co-host'
+      },
+      {
+        userId: 4,
+        groupId: 7,
+        status: 'pending'
+      },
+      {
+        userId: 4,
+        groupId: 6,
+        status: 'member'
+      },
+      {
+        userId: 1,
+        groupId: 10,
+        status: 'pending'
+      },
+      {
+        userId: 5,
+        groupId: 8,
+        status: 'member'
+      },
+      {
+        userId: 4,
+        groupId: 9,
+        status: 'pending'
       }
     ], { validate: true });
   },

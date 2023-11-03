@@ -60,6 +60,46 @@ module.exports = {
       state: 'MA',
       lat: 42.3601,
       lng: -71.0942
+    },
+    {
+      groupId: 8,
+      address: '456 Faker Street',
+      city: 'Portland',
+      state: 'OR',
+      lat: 45.5152,
+      lng: -122.6784
+    },
+    {
+      groupId: 7,
+      address: 'Melody Road',
+      city: 'Canton',
+      state: 'OH',
+      lat: 40.7989,
+      lng: -81.3784
+    },
+    {
+      groupId: 6,
+      address: 'Ancient Boulevard',
+      city: 'Rome',
+      state: 'IT',
+      lat: 41.9028,
+      lng: 12.4964
+    },
+    {
+      groupId: 9,
+      address: '77 Massachusetts Ave',
+      city: 'Cambridge',
+      state: 'MA',
+      lat: 42.3601,
+      lng: -71.0942
+    },
+    {
+      groupId: 10,
+      address: '777 Luxor Avenue',
+      city: 'Las Vegas',
+      state: 'NV',
+      lat: 36.1716,
+      lng: -115.1391
     }
    ], { validate: true });
   },

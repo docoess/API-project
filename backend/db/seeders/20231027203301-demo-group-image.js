@@ -45,6 +45,31 @@ module.exports = {
         groupId: 5,
         url: 'image url',
         preview: true
+      },
+      {
+        groupId: 6,
+        url: 'image url',
+        preview: true
+      },
+      {
+        groupId: 7,
+        url: 'image url',
+        preview: true
+      },
+      {
+        groupId: 8,
+        url: 'image url',
+        preview: true
+      },
+      {
+        groupId: 9,
+        url: 'image url',
+        preview: true
+      },
+      {
+        groupId: 10,
+        url: 'image url',
+        preview: true
       }
     ], { validate: true });
   },
