@@ -114,7 +114,7 @@ module.exports = {
     options.tableName = 'Venues';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      address: { [Op.in]: ['123 Fake Street', '612 Wharf Ave', '1000 Colonial Farm Road', '333 California Road', '77 Massachusetts Ave']}
+      groupId: { [Op.in]: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
     }, {});
   }
 };
