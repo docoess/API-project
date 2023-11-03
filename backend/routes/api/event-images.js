@@ -48,9 +48,7 @@ router.delete('/:imageId', requireAuth, async (req, res, next) => {
   if (!groupOrg && !member) {
     res.status(403);
     return res.json({
-      error: {
-        message: "Not authorized"
-      }
+        message: "Forbidden"
     });
   }
 
