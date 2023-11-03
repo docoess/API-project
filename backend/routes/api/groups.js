@@ -23,9 +23,7 @@ router.get('/:groupId/venues', requireAuth, async (req, res, next) => {
   if (!memStatus) {
     res.status(403);
     return res.json({
-      error: {
-        message: "Not authorized"
-      }
+      message: "Forbidden"
     });
   }
 
@@ -39,7 +37,7 @@ router.get('/:groupId/venues', requireAuth, async (req, res, next) => {
   if ((userId !== group.organizerId || !memStatus) && (memStatus && memStatus.status !== 'co-host')) {
     res.status(403);
     return res.json({
-      message: "Only the group organizer or a co-host can view all venues for a group"
+      message: "Forbidden"
     })
   }
 
@@ -327,9 +325,7 @@ router.post('/:groupId/venues', requireAuth, validateVenue, async (req, res, nex
   if (!member) {
     res.status(403);
     return res.json({
-      error: {
-        message: "Not authorized"
-      }
+      message: "Forbidden"
     });
   }
 
@@ -343,7 +339,7 @@ router.post('/:groupId/venues', requireAuth, validateVenue, async (req, res, nex
   if ((userId !== group.organizerId || !member) && (member && member.status !== 'co-host')) {
     res.status(403);
     return res.json({
-      message: "Only the group organizer or a co-host can add a Venue"
+      message: "Forbidden"
     });
   }
 
@@ -384,9 +380,7 @@ router.post('/:groupId/images', requireAuth, async (req, res, next) => {
   if (userId !== group.organizerId) {
     res.status(403);
     return res.json({
-      error: {
-        message: 'Not authorized'
-      }
+      message: "Forbidden"
     });
   };
 
@@ -424,9 +418,7 @@ router.post('/:groupId/events', requireAuth, validateEvent, async (req, res, nex
   if (!member) {
     res.status(403);
     return res.json({
-      error: {
-        message: "Not authorized"
-      }
+      message: "Forbidden"
     });
   }
 
@@ -450,7 +442,7 @@ router.post('/:groupId/events', requireAuth, validateEvent, async (req, res, nex
   if ((userId !== group.organizerId || !member) && (member && member.status !== 'co-host')) {
     res.status(403);
     return res.json({
-      message: "Only the group organizer or a co-host can create an event"
+      message: "Forbidden"
     });
   }
 
@@ -613,20 +605,14 @@ router.put('/:groupId/membership', requireAuth, async (req, res, next) => {
   if (status === 'co-host' && !organizer) {
     res.status(403);
     return res.json({
-      message: 'Validation Error',
-      errors: {
-        "memberId": "Only group organizer can change a membership status to co-host"
-      }
+      message: "Forbidden"
     });
   }
 
   if (status === 'member' && !(organizer || cohost)) {
     res.status(403);
     return res.json({
-      message: 'Validation Error',
-      errors: {
-        "memberId": "Only group organizer or a co-host can change a membership status"
-      }
+      message: "Forbidden"
     });
   }
 
@@ -664,9 +650,7 @@ router.put('/:groupId', requireAuth, validateGroup, async (req, res, next) => {
   if (userId !== group.organizerId) {
     res.status(403);
     return res.json({
-      error: {
-        message: 'Not authorized'
-      }
+      message: "Forbidden"
     });
   };
 
@@ -733,10 +717,7 @@ router.delete('/:groupId/membership', requireAuth, async (req, res, next) => {
   if (!organizer && userId !== membershipToDelete.userId) {
     res.status(403);
     return res.json({
-      message: 'Validation Error',
-      errors: {
-        "memberId": "Only group organizer or a member themself can remove a membership"
-      }
+      message: "Forbidden"
     });
   }
 
@@ -766,7 +747,7 @@ router.delete('/:groupId', requireAuth, async (req, res, next) => {
   if (userId !== group.organizerId) {
     res.status(403);
     return res.json({
-      message: "Only the group organizer can delete a Group"
+      message: "Forbidden"
     });
   }
 

@@ -261,9 +261,7 @@ router.post('/:eventId/images', requireAuth, async (req, res, next) => {
   } else {
     res.status(403);
     return res.json({
-      error: {
-        message: "Not authorized"
-      }
+      message: "Forbidden"
     });
   }
 
@@ -319,9 +317,7 @@ router.post('/:eventId/attendance', requireAuth, async (req, res, next) => {
   if (!membership || membership.status === 'pending') {
     res.status(403);
     return res.json({
-      error: {
-        message: "Not authorized"
-      }
+      message: "Forbidden"
     });
   }
 
@@ -392,16 +388,14 @@ router.put('/:eventId/attendance', requireAuth, async (req, res, next) => {
   if (!membership) {
     res.status(403);
     return res.json({
-      error: {
-        message: "Not authorized"
-      }
+      message: "Forbidden"
     });
   }
 
   if (!organizer && !cohost) {
     res.status(403);
     return res.json({
-      message: "Only an organizer or co-host can change a membership status"
+      message: "Forbidden"
     });
   }
 
@@ -465,9 +459,7 @@ router.put('/:eventId', requireAuth, validateEvent, async (req, res, next) => {
   if (!organizer && !cohost) {
     res.status(403);
     return res.json({
-      error: {
-        message: "Not authorized"
-      }
+      message: "Forbidden"
     });
   }
 
@@ -526,7 +518,7 @@ router.delete('/:eventId/attendance', requireAuth, async (req, res, next) => {
   if (!organizer && userId !== userToDelete) {
     res.status(403);
     return res.json({
-      message: "Only the User or organizer may delete an Attendance"
+      message: "Forbidden"
     });
   }
 
@@ -569,9 +561,7 @@ router.delete('/:eventId', requireAuth, async (req, res, next) => {
   if (!organizer && !cohost) {
     res.status(403);
     return res.json({
-      error: {
-        message: "Not authorized"
-      }
+      message: "Forbidden"
     });
   }
 

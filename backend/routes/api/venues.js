@@ -35,18 +35,14 @@ router.put('/:venueId', requireAuth, validateVenue, async (req, res, next) => {
   if (userId !== group.organizerId && !cohost) {
     res.status(403);
     return res.json({
-      error: {
-        message: "Not authorized"
-      }
+      message: "Forbidden"
     });
   }
 
   if (!memStatus) {
     res.status(403);
     return res.json({
-      error: {
-        message: "Not authorized"
-      }
+      message: "Forbidden"
     });
   }
 
