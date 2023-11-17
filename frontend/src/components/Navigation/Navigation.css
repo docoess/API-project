@@ -1,3 +1,21 @@
 .hidden {
   display: none;
 }
+
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  list-style-type: none;
+  border-bottom: 2px solid gray;
+  padding-bottom: 10px;
+}
+
+.profile-button-container {
+  margin-right: 100px;
+}
+
+.logo-image {
+  width: 120px;
+  height: auto;
+}

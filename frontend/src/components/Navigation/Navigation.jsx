@@ -2,17 +2,20 @@ import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import './Navigation.css';
+import logo from './logo.png';
 
 function Navigation({ isLoaded }) {
   const sessionUser = useSelector(state => state.session.user);
 
   return (
-    <ul>
+    <ul className='navbar-container'>
       <li>
-        <NavLink exact to="/">Home</NavLink>
+        <NavLink exact to="/">
+          <img className='logo-image' src={logo} />
+        </NavLink>
       </li>
       {isLoaded && (
-        <li>
+        <li className='profile-button-container'>
           <ProfileButton user={sessionUser} />
         </li>
       )}
@@ -21,3 +24,5 @@ function Navigation({ isLoaded }) {
 }
 
 export default Navigation;
+
+// https://cdn.freebiesupply.com/logos/large/2x/meetup-1-logo-png-transparent.png
