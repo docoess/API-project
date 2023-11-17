@@ -4,6 +4,9 @@ import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 import Navigation from './components/Navigation';
 import * as sessionActions from './store/session';
 import LandingPage from './components/LandingPage';
+import GroupList from './components/GroupList';
+import EventList from './components/EventList';
+import GroupDetails from './components/GroupList/GroupDetails';
 
 function Layout() {
   const dispatch = useDispatch();
@@ -30,6 +33,18 @@ const router = createBrowserRouter([
       {
         path: '/',
         element: <LandingPage />
+      },
+      {
+        path: '/groups',
+        element: <GroupList />
+      },
+      {
+        path: '/events',
+        element: <EventList />
+      },
+      {
+        path: '/groups/:groupId',
+        element: <GroupDetails />
       }
     ]
   }

@@ -1,0 +1,36 @@
+.group-list-item {
+  display: flex;
+  flex-direction: row;
+  padding: 20px 0 0 10px;
+  margin: 20px;
+  width: 720px;
+  border-top: 2px solid gray;
+}
+.group-entry {
+  display: flex;
+  flex-direction: column;
+}
+
+.group-preview-image {
+  max-width: 140px;
+  padding-right: 60px;
+}
+
+.group-name {
+  font-size: 18pt;
+  font-weight: bold;
+  color: black;
+}
+
+.group-loc {
+  color: gray;
+  font-weight: bold;
+}
+
+.group-about {
+  color: black;
+}
+
+.group-misc {
+  color: gray;
+}

@@ -1,0 +1,12 @@
+.groups-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 100%;
+}
+
+.group-navlink {
+  text-decoration: none;
+}

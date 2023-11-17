@@ -29,13 +29,13 @@ export default function LandingPage() {
       <div className='lp-sec3-container'>
         <div className='lp-btn-container'>
           <img className='lp-btn-pic' src={ph_icon} />
-          <NavLink className={'lp-link-text'}>See all groups</NavLink>
+          <NavLink to='/groups' className={'lp-link-text'}>See all groups</NavLink>
           <p className='lp-btn-text'>Meetup ipsum dolor amet ham t-bone hamburger
           filet mignon.</p>
         </div>
         <div className='lp-btn-container'>
           <img className='lp-btn-pic' src={ph_icon} />
-          <NavLink className={'lp-link-text'}>Find an event</NavLink>
+          <NavLink to='/events' className={'lp-link-text'}>Find an event</NavLink>
           <p className='lp-btn-text'>Meetup ipsum dolor amet ham t-bone hamburger
           filet mignon.</p>
         </div>
