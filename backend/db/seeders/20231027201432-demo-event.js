@@ -251,6 +251,17 @@ module.exports = {
         price: 70,
         startDate: '2093-12-26 12:00:00',
         endDate: '2093-12-29 12:00:00'
+      },
+      {
+        venueId: null,
+        groupId: 2,
+        name: 'The Release for the 26th WoW Expansion!!!',
+        description: 'Come fight Mega-Mega-Arthas and Super-Duper-Ony in the next new release!',
+        type: 'Online',
+        capacity: 40,
+        price: 70,
+        startDate: '2023-11-22 19:00:00',
+        endDate: '2023-11-22 22:00:00'
       }
     ], { validate: true });
   },

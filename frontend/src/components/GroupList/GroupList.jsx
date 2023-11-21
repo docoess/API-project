@@ -13,7 +13,7 @@ export default function GroupList() {
   useEffect(() => {
 
     const getGroups = async () => {
-      groups = await dispatch(thunkFetchGroups());
+      await dispatch(thunkFetchGroups());
     }
 
     getGroups();

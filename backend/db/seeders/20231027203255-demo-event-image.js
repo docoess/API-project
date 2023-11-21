@@ -125,6 +125,11 @@ module.exports = {
         eventId: 21,
         url: 'https://i.imgur.com/RXhcfS9.jpg',
         preview: true
+      },
+      {
+        eventId: 22,
+        url: 'https://i.imgur.com/RXhcfS9.jpg',
+        preview: true
       }
     ], { validate: true });
   },
