@@ -49,7 +49,7 @@ export default function LandingPage() {
         </div>
         <div className='lp-btn-container'>
           <img className='lp-btn-pic' src={ph_icon} />
-          <NavLink className={handleCreateGroup}>Start a group</NavLink>
+          <NavLink to='/groups/new' className={handleCreateGroup}>Start a group</NavLink>
           <p className='lp-btn-text'>Meetup ipsum dolor amet ham t-bone hamburger
           filet mignon.</p>
         </div>

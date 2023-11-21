@@ -17,7 +17,7 @@ export default function GroupItem({ group }) {
     }
 
     getGroupDetails();
-  }, []);
+  }, [dispatch]);
 
 
   return (
@@ -27,7 +27,7 @@ export default function GroupItem({ group }) {
         <span className='group-name'>{group && group.name}</span>
         <span className='group-loc'>{group && group.city}, {group && group.state}</span>
         <span className='group-about'>{group && group.about}</span>
-        <span className='group-misc'>{`${group && group.Events && group.Events.length > 1 ? `${group.Events && group.Events.length} events` : `${group.Events && group.Events.length} event`}`} * {group && group.private ? 'Private' : 'Public'}</span>
+        <span className='group-misc'>{`${group && group.Events && group.Events.length !== 1 ? `${group.Events && group.Events.length} events` : `${group.Events && group.Events.length} event`}`} * {group && group.private ? 'Private' : 'Public'}</span>
       </div>
     </div>
   )

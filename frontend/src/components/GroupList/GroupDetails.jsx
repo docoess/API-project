@@ -16,9 +16,9 @@ export default function GroupDetails() {
 
     const getGroupDetails = async () => {
       groups = await dispatch(thunkFetchGroups());
-      group = Object.values(groups).find(el => el.id == groupId);
-      if (group !== undefined) {
-        await dispatch(thunkFetchGroupInfo(group.id));
+      group = Object.values(groups).find(el => el.id == Number(groupId));
+      if (groupId) {
+        await dispatch(thunkFetchGroupInfo(groupId));
       }
     }
 
@@ -64,7 +64,7 @@ export default function GroupDetails() {
         }
         {
           futureEvents && futureEvents.map(event => {
-            const fullDateTime = new Date(event.startDate);
+              const fullDateTime = new Date(event.startDate);
               const yyyy = fullDateTime.getFullYear();
               const mm = fullDateTime.getMonth();
               const dd = fullDateTime.getDate();

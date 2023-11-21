@@ -1,5 +1,8 @@
+import Cookies from "js-cookie";
+
 const LOAD_GROUPS = 'groups/LOAD';
 const GET_GROUP = 'groups/GET_ONE';
+const CREATE_GROUP = 'groups/CREATE';
 
 export const actionLoadAllGroups = (groups) => {
   return {
@@ -16,15 +19,18 @@ export const actionGetGroupInfo = (group, events) => {
   }
 }
 
+export const actionCreateGroup = (group) => {
+  return {
+    type: CREATE_GROUP,
+    group
+  }
+}
+
 export const thunkFetchGroups = () => async (dispatch) => {
   const response = await fetch('/api/groups');
   const groups = await response.json();
-  const normalizedGroups = {};
-  Object.values(groups.Groups).forEach(group => {
-    normalizedGroups[group.id] = group;
-  });
-  dispatch(actionLoadAllGroups(normalizedGroups));
-  return normalizedGroups;
+  dispatch(actionLoadAllGroups(groups));
+  return groups;
 }
 
 export const thunkFetchGroupInfo = (groupId) => async (dispatch) => {
@@ -37,18 +43,38 @@ export const thunkFetchGroupInfo = (groupId) => async (dispatch) => {
   return groupInfo;
 }
 
+export const thunkFetchPostGroup = (group) => async (dispatch) => {
+  const reqBody = group;
+  const route = '/api/groups';
+
+  const response = await fetch(route, {method: 'POST', headers: {"Content-Type": "application/json", "XSRF-Token": Cookies.get('XSRF-TOKEN')}, body: JSON.stringify(reqBody)});
+  const newGroup = await response.json();
+  console.log('NEW GROUP', newGroup)
+  dispatch(actionCreateGroup(newGroup));
+  return newGroup;
+}
+
 const initialState = { };
 
 const groupReducer = (state = initialState, action) => {
   switch (action.type){
     case LOAD_GROUPS: {
-      const newState = { ...action.groups };
+      const normalizedGroups = {};
+      Object.values(action.groups.Groups).forEach(group => {
+        normalizedGroups[group.id] = group;
+      });
+      const newState = { ...normalizedGroups };
       return newState;
     }
     case GET_GROUP: {
       const group = action.group;
       const Events = action.events;
       const newState = { ...state, [group.id]: {...state[group.id], ...group, ...Events} };
+      return newState;
+    }
+    case CREATE_GROUP: {
+      const group = action.group;
+      const newState = { ...state, [group.id]: {...state[group.id], ...group}}
       return newState;
     }
     default:
