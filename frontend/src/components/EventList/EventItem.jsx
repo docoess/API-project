@@ -1,4 +1,3 @@
-import ph_icon from './PH_icon.jpg';
 import './EventItem.css';
 
 export default function EventItem({ event }) {
@@ -17,7 +16,7 @@ export default function EventItem({ event }) {
 
   return (
     <div className='event-list-item'>
-      <img className='event-preview-image' src={ph_icon} />
+      <img className='event-preview-image' src={event.previewImage} />
       <div className='event-entry'>
         <span className='event-date'>{yearString} * {eventTime}</span>
         <span className='event-name'>{event.name}</span>

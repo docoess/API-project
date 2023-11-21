@@ -7,9 +7,7 @@ import './EventList.css';
 
 export default function EventList() {
   const dispatch = useDispatch();
-  const events = useSelector(state => Object.values(state.eventState.Events));
-
-  // console.log(events);
+  const events = useSelector(state => Object.values(state.eventState));
 
   useEffect(() => {
     dispatch(thunkFetchEvents());

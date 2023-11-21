@@ -12,6 +12,7 @@
 
 .group-picture {
   flex-basis: 60%;
+  max-width: 800px;
   justify-self: left;
 }
 

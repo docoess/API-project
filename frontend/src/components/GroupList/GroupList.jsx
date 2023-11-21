@@ -7,15 +7,13 @@ import './GroupList.css';
 
 export default function GroupList() {
   const dispatch = useDispatch();
-  let groups = useSelector(state => Object.values(state.groupState.Groups));
+  let groups = useSelector(state => Object.values(state.groupState));
 
-  // console.log('GROUPS', groups)
 
   useEffect(() => {
 
     const getGroups = async () => {
       groups = await dispatch(thunkFetchGroups());
-      console.log('GROUPS IN USE EFFECT', groups)
     }
 
     getGroups();
@@ -28,14 +26,15 @@ export default function GroupList() {
       </nav>
       <ul className='groups-list'>
         {
-          groups && groups.map(group => (
+          groups && groups.map(group => {
+            return (
             <NavLink className={'group-navlink'} key={group.id} to={`/groups/${group.id}`}>
               <GroupItem
                 key={group.id}
                 group={group}
               />
             </NavLink>
-          ))
+          )})
         }
       </ul>
     </div>

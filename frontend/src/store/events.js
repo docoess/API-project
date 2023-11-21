@@ -18,12 +18,12 @@ export const thunkFetchEvents = () => async (dispatch) => {
   return normalizedEvents;
 }
 
-const initialState = { Events: {} };
+const initialState = { };
 
 const eventReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOAD_EVENTS: {
-      const newState = { ...state, Events: { ...action.events } };
+      const newState = { ...action.events };
       return newState;
     }
     default:
