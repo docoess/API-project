@@ -2,8 +2,16 @@ import './LandingPage.css';
 import ph_ig from './PH_infographic.jpg';
 import ph_icon from './PH_icon.jpg';
 import { NavLink } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 export default function LandingPage() {
+  const sessionUser = useSelector(state => state.session.user);
+  const isLinkInactive = !sessionUser;
+
+  const handleCreateGroup = () => {
+    return 'lp-link-text' + (!isLinkInactive ? '' : ' inactive');
+  }
+
   return (
     <div className='landing-page-container'>
       <div className='lp-sec1-container'>
@@ -41,7 +49,7 @@ export default function LandingPage() {
         </div>
         <div className='lp-btn-container'>
           <img className='lp-btn-pic' src={ph_icon} />
-          <NavLink className={'lp-link-text'}>Start a new group</NavLink>
+          <NavLink className={handleCreateGroup}>Start a group</NavLink>
           <p className='lp-btn-text'>Meetup ipsum dolor amet ham t-bone hamburger
           filet mignon.</p>
         </div>

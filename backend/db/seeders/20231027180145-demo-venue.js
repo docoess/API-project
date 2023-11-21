@@ -49,7 +49,7 @@ module.exports = {
       groupId: 4,
       address: '333 California Road',
       city: 'Los Angeles',
-      state: 'OR',
+      state: 'CA',
       lat: 34.0549,
       lng: -118.2426
     },

@@ -1,4 +1,4 @@
-.group-list-item {
+.event-list-item {
   display: flex;
   flex-direction: row;
   padding: 20px 0 0 10px;
@@ -6,34 +6,35 @@
   width: 720px;
   border-top: 2px solid gray;
 }
-.group-entry {
+
+.event-entry {
   display: flex;
   flex-direction: column;
 }
 
-.group-preview-image {
+.event-preview-image {
   max-width: 140px;
   padding-right: 60px;
 }
 
-.group-name {
+.event-name {
   font-size: 18pt;
   font-weight: bold;
   color: black;
   padding-bottom: 4px;
 }
 
-.group-loc {
+.event-loc {
   color: gray;
   font-weight: bold;
   padding-bottom: 8px;
 }
 
-.group-about {
+.event-desc {
   color: black;
   padding-bottom: 8px;
 }
 
-.group-misc {
-  color: gray;
+.event-date {
+  color: teal;
 }

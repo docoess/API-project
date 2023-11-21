@@ -1,15 +1,31 @@
 const LOAD_EVENTS = 'events/LOAD';
 
-export const actionLoadAllEvents = () => {
+export const actionLoadAllEvents = (events) => {
   return {
-    type: LOAD_EVENTS
+    type: LOAD_EVENTS,
+    events
   }
 }
 
-const initialState = { events: {} };
+export const thunkFetchEvents = () => async (dispatch) => {
+  const response = await fetch('/api/events');
+  const events = await response.json();
+  const normalizedEvents = {};
+  Object.values(events.Events).forEach(event => {
+    normalizedEvents[event.id] = event;
+  });
+  dispatch(actionLoadAllEvents(normalizedEvents));
+  return normalizedEvents;
+}
+
+const initialState = { Events: {} };
 
 const eventReducer = (state = initialState, action) => {
   switch (action.type) {
+    case LOAD_EVENTS: {
+      const newState = { ...state, Events: { ...action.events } };
+      return newState;
+    }
     default:
       return state;
   }

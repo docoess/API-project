@@ -1,4 +1,4 @@
-.groups-list {
+.events-list {
   list-style: none;
   display: flex;
   flex-direction: column;
@@ -7,19 +7,7 @@
   width: 100%;
 }
 
-.group-navlink {
+.event-navlink {
   text-decoration: none;
   font-size: 12pt;
-}
-
-a {
-  text-decoration: none;
-  color: gray;
-  font-size: 18pt;
-}
-
-a.active {
-  color: teal;
-  text-decoration: underline;
-  pointer-events: none;
 }

@@ -59,6 +59,14 @@
 
 .lp-link-text {
   font-size: 18pt;
+  color: teal;
+  text-decoration: underline;
+}
+
+.lp-link-text.inactive {
+  pointer-events: none;
+  color: gray;
+  text-decoration: none;
 }
 
 .lp-btn-pic {

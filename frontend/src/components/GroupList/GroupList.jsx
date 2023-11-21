@@ -9,13 +9,17 @@ export default function GroupList() {
   const dispatch = useDispatch();
   const groups = useSelector(state => Object.values(state.groupState.Groups));
 
+  // console.log('GROUPS', groups)
+
   useEffect(() => {
     dispatch(thunkFetchGroups());
   }, [dispatch]);
 
   return (
-    <div>
-      <h1>Groups</h1>
+    <div className='groups-list-container'>
+      <nav className='group-list-buttons'>
+        <NavLink to='/events'>Events</NavLink>  <NavLink to='/groups'>Groups</NavLink>
+      </nav>
       <ul className='groups-list'>
         {
           groups.map(group => (

@@ -1,3 +1,32 @@
-body {
-  color: blue;
+#return-to-groups {
+  font-size: 12pt;
+  color: teal;
+  pointer-events: all;
+}
+
+.group-details-top-container {
+  width: 1000px;
+  display: flex;
+  flex-direction: column;
+}
+
+.group-picture {
+  flex-basis: 60%;
+  justify-self: left;
+}
+
+.group-info-top {
+  display: flex;
+  flex-direction: row;
+}
+
+.group-info-text {
+  flex-basis: 40%;
+  justify-self: flex-end;
+}
+
+.group-info-mid {
+  display: flex;
+  flex-direction: column;
+  background-color: lightgray;
 }
