@@ -23,107 +23,107 @@ module.exports = {
     await EventImage.bulkCreate([
       {
         eventId: 3,
-        url: 'image url',
+        url: 'https://i.imgur.com/5fNttkE.jpg',
         preview: true
       },
       {
         eventId: 1,
-        url: 'image url',
+        url: 'https://i.imgur.com/1zwFAtQ.jpg',
         preview: true
       },
       {
         eventId: 2,
-        url: 'image url',
+        url: 'https://i.imgur.com/RXhcfS9.jpg',
         preview: true
       },
       {
         eventId: 4,
-        url: 'image url',
+        url: 'https://i.imgur.com/nBI55V3.png',
         preview: true
       },
       {
         eventId: 5,
-        url: 'image url',
+        url: 'https://i.imgur.com/rAOZKOB.jpg',
         preview: true
       },
       {
         eventId: 6,
-        url: 'image url',
+        url: 'https://i.imgur.com/nBI55V3.png',
         preview: true
       },
       {
         eventId: 7,
-        url: 'image url',
+        url: 'https://i.imgur.com/49NutHe.jpg',
         preview: true
       },
       {
         eventId: 8,
-        url: 'image url',
+        url: 'https://i.imgur.com/k5HudmG.jpg',
         preview: true
       },
       {
         eventId: 9,
-        url: 'image url',
+        url: 'https://i.imgur.com/49NutHe.jpg',
         preview: true
       },
       {
         eventId: 10,
-        url: 'image url',
+        url: 'https://i.imgur.com/rAOZKOB.jpg',
         preview: true
       },
       {
         eventId: 11,
-        url: 'image url',
+        url: 'https://i.imgur.com/1zwFAtQ.jpg',
         preview: true
       },
       {
         eventId: 12,
-        url: 'image url',
+        url: 'https://i.imgur.com/1zwFAtQ.jpg',
         preview: true
       },
       {
         eventId: 13,
-        url: 'image url',
+        url: 'https://i.imgur.com/1zwFAtQ.jpg',
         preview: true
       },
       {
         eventId: 14,
-        url: 'image url',
+        url: 'https://i.imgur.com/1zwFAtQ.jpg',
         preview: true
       },
       {
         eventId: 15,
-        url: 'image url',
+        url: 'https://i.imgur.com/1zwFAtQ.jpg',
         preview: true
       },
       {
         eventId: 16,
-        url: 'image url',
+        url: 'https://i.imgur.com/1zwFAtQ.jpg',
         preview: true
       },
       {
         eventId: 17,
-        url: 'image url',
+        url: 'https://i.imgur.com/1zwFAtQ.jpg',
         preview: true
       },
       {
         eventId: 18,
-        url: 'image url',
+        url: 'https://i.imgur.com/k5HudmG.jpg',
         preview: true
       },
       {
         eventId: 19,
-        url: 'image url',
+        url: 'https://i.imgur.com/k5HudmG.jpg',
         preview: true
       },
       {
         eventId: 20,
-        url: 'image url',
+        url: 'https://i.imgur.com/nBI55V3.png',
         preview: true
       },
       {
         eventId: 21,
-        url: 'image url',
+        url: 'https://i.imgur.com/RXhcfS9.jpg',
         preview: true
       }
     ], { validate: true });

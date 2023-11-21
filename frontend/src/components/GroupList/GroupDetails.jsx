@@ -46,7 +46,7 @@ export default function GroupDetails() {
           <div className='group-info-text'>
             <h1>{group && group.name}</h1>
             <p>{group && `${group.city}, ${group.state}`}</p>
-            <p>{group && `## events * ${group.private ? 'Private' : 'Public'}`}</p>
+            <p>{group && `${group.Events && group.Events.length} events * ${group.private ? 'Private' : 'Public'}`}</p>
             <p>Organized by {group && group.Organizer && `${group.Organizer.firstName} ${group.Organizer.lastName}`}</p>
             <button>Join this group</button>
           </div>

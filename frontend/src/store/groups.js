@@ -1,10 +1,5 @@
-import { createSelector } from "reselect";
-
 const LOAD_GROUPS = 'groups/LOAD';
 const GET_GROUP = 'groups/GET_ONE';
-
-export const selectGroups = state => state.groupState;
-export const selectGroupsArray = createSelector(selectGroups, groups => Object.values(groups));
 
 export const actionLoadAllGroups = (groups) => {
   return {
@@ -13,10 +8,11 @@ export const actionLoadAllGroups = (groups) => {
   }
 }
 
-export const actionGetGroupInfo = (group) => {
+export const actionGetGroupInfo = (group, events) => {
   return {
     type: GET_GROUP,
-    group
+    group,
+    events
   }
 }
 
@@ -27,19 +23,22 @@ export const thunkFetchGroups = () => async (dispatch) => {
   Object.values(groups.Groups).forEach(group => {
     normalizedGroups[group.id] = group;
   });
-  // console.log('NORMALIZED GROUPS', normalizedGroups)
-  dispatch(actionLoadAllGroups(normalizedGroups));
+  console.log('NORMALIZED GROUPS', normalizedGroups)
+  await dispatch(actionLoadAllGroups(normalizedGroups));
   return normalizedGroups;
 }
 
 export const thunkFetchGroupInfo = (groupId) => async (dispatch) => {
   const response = await fetch(`/api/groups/${groupId}`);
   const groupInfo = await response.json();
-  dispatch(actionGetGroupInfo(groupInfo));
+  const eventsResponse = await fetch(`/api/groups/${groupId}/events`);
+  const eventsInfo = await eventsResponse.json();
+  groupInfo.Events = eventsInfo.Events;
+  await dispatch(actionGetGroupInfo(groupInfo, eventsInfo));
   return groupInfo;
 }
 
-const initialState = { Groups: {} };
+const initialState = { Groups: { Events: {} } };
 
 const groupReducer = (state = initialState, action) => {
   switch (action.type){
@@ -50,6 +49,9 @@ const groupReducer = (state = initialState, action) => {
     }
     case GET_GROUP: {
       const group = action.group;
+      const events = action.events;
+      console.log('ACTION GROUP', group);
+      console.log('ACTION EVENTS', events);
       const newState = { ...state, Groups: {...state.Groups, [group.id]: group } };
       // console.log('NEW STATE =========', newState);
       return newState;

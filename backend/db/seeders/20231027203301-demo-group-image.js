@@ -23,52 +23,52 @@ module.exports = {
     await GroupImage.bulkCreate([
       {
         groupId: 1,
-        url: 'image url',
+        url: 'https://i.imgur.com/1zwFAtQ.jpg',
         preview: true
       },
       {
         groupId: 2,
-        url: 'image url',
+        url: 'https://i.imgur.com/RXhcfS9.jpg',
         preview: true
       },
       {
         groupId: 3,
-        url: 'image url',
+        url: 'https://i.imgur.com/5fNttkE.jpg',
         preview: true
       },
       {
         groupId: 4,
-        url: 'image url',
+        url: 'https://i.imgur.com/nBI55V3.png',
         preview: true
       },
       {
         groupId: 5,
-        url: 'image url',
+        url: 'https://i.imgur.com/rAOZKOB.jpg',
         preview: true
       },
       {
         groupId: 6,
-        url: 'image url',
+        url: 'https://i.imgur.com/pMdVANq.jpg',
         preview: true
       },
       {
         groupId: 7,
-        url: 'image url',
+        url: 'https://i.imgur.com/k5HudmG.jpg',
         preview: true
       },
       {
         groupId: 8,
-        url: 'image url',
+        url: 'https://i.imgur.com/49NutHe.jpg',
         preview: true
       },
       {
         groupId: 9,
-        url: 'image url',
+        url: 'https://i.imgur.com/rAOZKOB.jpg',
         preview: true
       },
       {
         groupId: 10,
-        url: 'image url',
+        url: 'https://i.imgur.com/nBI55V3.png',
         preview: true
       }
     ], { validate: true });

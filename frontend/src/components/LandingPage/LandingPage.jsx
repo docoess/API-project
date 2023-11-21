@@ -22,7 +22,7 @@ export default function LandingPage() {
           <span className='intro-body'>Meetup ipsum dolor amet ham t-bone hamburger
           filet mignon biltong shank salami sausage ham hock chislic brisket.
           Bresaola swine turkey doner pork chop spare ribs meatloaf
-          frankfurter beef turducken. .</span>
+          frankfurter beef turducken.</span>
         </div>
         <div className='infographic'>
           <img className='info-pic' src={ph_ig} />
