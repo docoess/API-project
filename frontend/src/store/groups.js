@@ -13,11 +13,12 @@ export const actionLoadAllGroups = (groups) => {
   }
 }
 
-export const actionGetGroupInfo = (group, events) => {
+export const actionGetGroupInfo = (group, events, groupInfo) => {
   return {
     type: GET_GROUP,
     group,
-    events
+    events,
+    groupInfo
   }
 }
 
@@ -54,13 +55,14 @@ export const thunkFetchGroups = () => async (dispatch, getState) => {
 }
 
 export const thunkFetchGroupInfo = (groupId) => async (dispatch, getState) => {
-  const groups = getState().groupState;
-  console.log('===== STATE =====', groups);
+  const currState = getState().groupState;
+  const currGroup = await fetch(`/api/groups/${groupId}`);
+  const groupInfo = await currGroup.json();
   const eventsResponse = await fetch(`/api/groups/${groupId}/events`);
   const eventsInfo = await eventsResponse.json();
-  const group = groups[groupId];
-  group['Events'] = eventsInfo.Events;
-  dispatch(actionGetGroupInfo(group, eventsInfo));
+  let group = currState[groupId];
+  // group['Events'] = eventsInfo.Events;
+  dispatch(actionGetGroupInfo(group, eventsInfo, groupInfo));
   return group;
 }
 
@@ -108,8 +110,13 @@ const groupReducer = (state = initialState, action) => {
     }
     case GET_GROUP: {
       const group = action.group;
-      const Events = action.events;
-      const newState = { ...state, [group.id]: {...state[group.id], ...group, ...Events} };
+      const events = action.events;
+      const info = action.groupInfo;
+      const GroupImages = info.GroupImages;
+      const Organizer = info.Organizer;
+      const Venues = info.Venues;
+      console.log(info)
+      const newState = { ...state, [group.id]: {...state[group.id], ...group, ...events, GroupImages, Organizer, Venues } };
       return newState;
     }
     case CREATE_GROUP: {

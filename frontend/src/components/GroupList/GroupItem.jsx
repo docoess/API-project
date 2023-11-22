@@ -6,7 +6,7 @@ import './GroupItem.css'
 export default function GroupItem({ group }) {
   const dispatch = useDispatch();
   const groupId = group.id;
-  const groupImage = group && group.previewImage;
+  const groupImage = group && group.GroupImages && group.GroupImages[0].url;
 
   useEffect(() => {
 
