@@ -24,10 +24,17 @@
 .group-info-text {
   flex-basis: 40%;
   justify-self: flex-end;
+  display: flex;
+  flex-direction: column;
 }
 
 .group-info-mid {
   display: flex;
   flex-direction: column;
   background-color: lightgray;
+}
+
+.join-group-btn {
+  justify-self: flex-end;
+
 }

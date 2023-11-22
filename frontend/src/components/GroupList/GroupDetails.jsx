@@ -11,6 +11,8 @@ export default function GroupDetails() {
   let group;
   let pastEvents;
   let futureEvents;
+  const user = useSelector(state => state.session.user);
+  const userId = user && user.id;
 
   useEffect(() => {
 
@@ -24,10 +26,14 @@ export default function GroupDetails() {
 
     getGroupDetails();
 
-  }, []);
+  }, [dispatch]);
 
   const handleJoinClick = () => {
     alert('Feature Coming Soon...');
+  }
+
+  const handleUpdateClick = (groupId) => {
+    alert(`PUT /api/groups/${groupId}`)
   }
 
   groups = useSelector(state => state.groupState);
@@ -50,7 +56,14 @@ export default function GroupDetails() {
             <p>{group && `${group.city}, ${group.state}`}</p>
             <p>{group && `${group.Events && group.Events.length} events * ${group.private ? 'Private' : 'Public'}`}</p>
             <p>Organized by {group && group.Organizer && `${group.Organizer.firstName} ${group.Organizer.lastName}`}</p>
-            <button onClick={handleJoinClick}>Join this group</button>
+            {
+              user && group && userId === group.organizerId &&
+              <span>
+                <button>Create Event</button>
+                <button onClick={() => handleUpdateClick(groupId)}>Update</button>
+                <button>Delete</button>
+              </span> || <button className='join-group-btn' onClick={handleJoinClick}>Join this group</button>
+            }
           </div>
         </div>
       </div>
@@ -94,6 +107,9 @@ export default function GroupDetails() {
         }
         {
           pastEvents && pastEvents.length > 0 && <p className='past-label'>Past Events ({pastEvents.length})</p>
+        }
+        {
+          futureEvents && pastEvents && futureEvents.length === 0 && pastEvents.length === 0 && <p className='no-events-label'>No Upcoming Events</p>
         }
       </div>
     </>
