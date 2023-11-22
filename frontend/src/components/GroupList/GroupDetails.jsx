@@ -1,10 +1,11 @@
-import { useParams, NavLink } from 'react-router-dom';
+import { useParams, NavLink, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { thunkFetchGroupInfo, thunkFetchGroups } from '../../store/groups';
 import { useEffect } from 'react';
 import './GroupDetails.css';
 
 export default function GroupDetails() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { groupId } = useParams();
   let groups;
@@ -33,7 +34,7 @@ export default function GroupDetails() {
   }
 
   const handleUpdateClick = (groupId) => {
-    alert(`PUT /api/groups/${groupId}`)
+    navigate(`/groups/${groupId}/edit`);
   }
 
   groups = useSelector(state => state.groupState);
