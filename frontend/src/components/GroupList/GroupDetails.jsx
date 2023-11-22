@@ -2,6 +2,8 @@ import { useParams, NavLink, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { thunkFetchGroupInfo, thunkFetchGroups } from '../../store/groups';
 import { useEffect } from 'react';
+import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
+import DeleteGroupModal from '../DeleteGroupModal';
 import './GroupDetails.css';
 
 export default function GroupDetails() {
@@ -62,7 +64,10 @@ export default function GroupDetails() {
               <span>
                 <button>Create Event</button>
                 <button onClick={() => handleUpdateClick(groupId)}>Update</button>
-                <button>Delete</button>
+                <OpenModalMenuItem
+                  itemText='Delete'
+                  modalComponent={<DeleteGroupModal group={group} />}
+                />
               </span> || <button className='join-group-btn' onClick={handleJoinClick}>Join this group</button>
             }
           </div>

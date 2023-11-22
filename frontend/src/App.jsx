@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import Navigation from './components/Navigation';
 import * as sessionActions from './store/session';
 import LandingPage from './components/LandingPage';
@@ -22,46 +22,26 @@ function Layout() {
 
   return (
     <>
-      <Navigation isLoaded={isLoaded} />
-      {isLoaded && <Outlet />}
+      {
+       isLoaded &&
+        <>
+          <Navigation isLoaded={isLoaded} />
+          <Routes>
+            <Route path='/' element={<LandingPage />} />
+            <Route path='/groups' element={<GroupList />} />
+            <Route path='/events' element={<EventList />} />
+            <Route path='/groups/:groupId' element={<GroupDetails />} />
+            <Route path='/groups/new' element={<CreateGroupForm />} />
+            <Route path='/groups/:groupId/edit' element={<UpdateGroupForm />} />
+          </Routes>
+        </>
+      }
     </>
   );
 }
 
-const router = createBrowserRouter([
-  {
-    element: <Layout />,
-    children: [
-      {
-        path: '/',
-        element: <LandingPage />
-      },
-      {
-        path: '/groups',
-        element: <GroupList />
-      },
-      {
-        path: '/events',
-        element: <EventList />
-      },
-      {
-        path: '/groups/:groupId',
-        element: <GroupDetails />
-      },
-      {
-        path: '/groups/new',
-        element: <CreateGroupForm />
-      },
-      {
-        path: '/groups/:groupId/edit',
-        element: <UpdateGroupForm />
-      }
-    ]
-  }
-]);
-
 function App() {
-  return <RouterProvider router={router} />;
+  return <Layout />;
 }
 
 export default App;

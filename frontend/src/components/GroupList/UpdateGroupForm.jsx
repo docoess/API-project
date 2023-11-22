@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
-import { thunkFetchGroupInfo } from '../../store/groups';
-// import Cookies from "js-cookie";
+import { useParams, useNavigate } from 'react-router-dom';
+import { thunkFetchGroupInfo, thunkFetchPutGroup } from '../../store/groups';
 import './UpdateGroupForm.css';
 
 export default function UpdateGroupForm() {
@@ -16,7 +15,7 @@ export default function UpdateGroupForm() {
   const [validationErrors, setValidationErrors] = useState({});
   const [hasSubmitted, setHasSubmitted] = useState(false);
   const dispatch = useDispatch();
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
 
@@ -59,20 +58,22 @@ export default function UpdateGroupForm() {
     setHasSubmitted(true);
 
     if (!Object.values(validationErrors).length) {
-      // const splitLoc = groupLoc.split(', ');
-      // const locCity = splitLoc[0];
-      // const locState = splitLoc[1];
+      const splitLoc = groupLoc.split(', ');
+      const locCity = splitLoc[0];
+      const locState = splitLoc[1];
 
-      // const createGroupReqBody = {
-      //   "name": groupName,
-      //   "about": groupAbout,
-      //   "type": groupType,
-      //   "private": groupPrivacy,
-      //   "city": locCity,
-      //   "state": locState
-      // }
+      const createGroupReqBody = {
+        "name": groupName,
+        "about": groupAbout,
+        "type": groupType,
+        "private": groupPrivacy,
+        "city": locCity,
+        "state": locState
+      }
 
-      // navigate(`/groups/${}`);
+      await dispatch(thunkFetchPutGroup(createGroupReqBody, groupId));
+
+      navigate(`/groups/${groupId}`);
 
     }
   }

@@ -24,5 +24,3 @@ function Navigation({ isLoaded }) {
 }
 
 export default Navigation;
-
-// https://cdn.freebiesupply.com/logos/large/2x/meetup-1-logo-png-transparent.png

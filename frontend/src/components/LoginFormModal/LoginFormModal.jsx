@@ -24,6 +24,14 @@ function LoginFormModal() {
       });
   };
 
+  const handleDemoLogin = () => {
+    return dispatch(sessionActions.login({
+      credential: 'Demo-lition',
+      password: 'password'
+    }))
+      .then(closeModal)
+  }
+
   return (
     <>
       <h1>Log In</h1>
@@ -53,6 +61,9 @@ function LoginFormModal() {
           type="submit"
           disabled={credential.length < 4 || password.length < 6}
         >Log In</button>
+        <button
+          onClick={handleDemoLogin}
+        >Log in as Demo User</button>
       </form>
     </>
   );

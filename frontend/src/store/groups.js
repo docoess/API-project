@@ -3,6 +3,8 @@ import Cookies from "js-cookie";
 const LOAD_GROUPS = 'groups/LOAD';
 const GET_GROUP = 'groups/GET_ONE';
 const CREATE_GROUP = 'groups/CREATE';
+const UPDATE_GROUP = '/groups/UPDATE';
+const DELETE_GROUP = '/groups/DELETE';
 
 export const actionLoadAllGroups = (groups) => {
   return {
@@ -23,6 +25,20 @@ export const actionCreateGroup = (group) => {
   return {
     type: CREATE_GROUP,
     group
+  }
+}
+
+export const actionUpdateGroup = (group) => {
+  return {
+    type: UPDATE_GROUP,
+    group
+  }
+}
+
+export const actionDeleteGroup = (groupId) => {
+  return {
+    type: DELETE_GROUP,
+    groupId
   }
 }
 
@@ -54,6 +70,25 @@ export const thunkFetchPostGroup = (group) => async (dispatch) => {
   return newGroup;
 }
 
+export const thunkFetchPutGroup = (group, groupId) => async (dispatch) => {
+  const reqBody = group;
+  const route = `/api/groups/${groupId}`;
+
+  const response = await fetch(route, {method: 'PUT', headers: {"Content-Type": "application/json", "XSRF-Token": Cookies.get('XSRF-TOKEN')}, body: JSON.stringify(reqBody)});
+  const updatedGroup = await response.json();
+  dispatch(actionUpdateGroup(updatedGroup));
+  return updatedGroup;
+}
+
+export const thunkFetchDeleteGroup = (groupId) => async (dispatch) => {
+  const route = `/api/groups/${groupId}`;
+
+  const response = await fetch(route, {method: 'DELETE', headers: {"XSRF-Token": Cookies.get('XSRF-TOKEN')}});
+  const deleted = await response.json();
+  console.log(deleted);
+  dispatch(actionDeleteGroup(groupId));
+}
+
 const initialState = { };
 
 const groupReducer = (state = initialState, action) => {
@@ -75,6 +110,16 @@ const groupReducer = (state = initialState, action) => {
     case CREATE_GROUP: {
       const group = action.group;
       const newState = { ...state, [group.id]: {...state[group.id], ...group}}
+      return newState;
+    }
+    case UPDATE_GROUP: {
+      const group = action.group;
+      const newState = { ...state, [group.id]: {...state[group.id], ...group}}
+      return newState;
+    }
+    case DELETE_GROUP: {
+      const newState = { ...state };
+      delete newState[action.groupId];
       return newState;
     }
     default:
