@@ -7,7 +7,8 @@ import './GroupList.css';
 
 export default function GroupList() {
   const dispatch = useDispatch();
-  let groups = useSelector(state => Object.values(state.groupState));
+  let groupObj = useSelector(state => state.groupState);
+  const groups = Object.values(groupObj);
 
 
   useEffect(() => {
@@ -17,7 +18,7 @@ export default function GroupList() {
     }
 
     getGroups();
-  }, [dispatch]);
+  }, []);
 
   return (
     <div className='groups-list-container'>

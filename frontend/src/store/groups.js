@@ -42,21 +42,26 @@ export const actionDeleteGroup = (groupId) => {
   }
 }
 
-export const thunkFetchGroups = () => async (dispatch) => {
-  const response = await fetch('/api/groups');
-  const groups = await response.json();
-  dispatch(actionLoadAllGroups(groups));
-  return groups;
+export const thunkFetchGroups = () => async (dispatch, getState) => {
+  const currState = getState().groupState;
+  if (Object.keys(currState).length === 0) {
+    const response = await fetch('/api/groups');
+    const groups = await response.json();
+    dispatch(actionLoadAllGroups(groups));
+    return groups;
+  }
+  return currState;
 }
 
-export const thunkFetchGroupInfo = (groupId) => async (dispatch) => {
-  const response = await fetch(`/api/groups/${groupId}`);
-  const groupInfo = await response.json();
+export const thunkFetchGroupInfo = (groupId) => async (dispatch, getState) => {
+  const groups = getState().groupState;
+  console.log('===== STATE =====', groups);
   const eventsResponse = await fetch(`/api/groups/${groupId}/events`);
   const eventsInfo = await eventsResponse.json();
-  groupInfo.Events = eventsInfo.Events;
-  dispatch(actionGetGroupInfo(groupInfo, eventsInfo));
-  return groupInfo;
+  const group = groups[groupId];
+  group['Events'] = eventsInfo.Events;
+  dispatch(actionGetGroupInfo(group, eventsInfo));
+  return group;
 }
 
 export const thunkFetchPostGroup = (group) => async (dispatch) => {
