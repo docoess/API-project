@@ -9,6 +9,7 @@ import EventList from './components/EventList';
 import GroupDetails from './components/GroupList/GroupDetails';
 import CreateGroupForm from './components/GroupList/CreateGroupForm';
 import UpdateGroupForm from './components/GroupList/UpdateGroupForm';
+import EventDetails from './components/EventList/EventDetails';
 
 function Layout() {
   const dispatch = useDispatch();
@@ -31,6 +32,7 @@ function Layout() {
             <Route path='/groups' element={<GroupList />} />
             <Route path='/events' element={<EventList />} />
             <Route path='/groups/:groupId' element={<GroupDetails />} />
+            <Route path='/events/:eventId' element={<EventDetails />} />
             <Route path='/groups/new' element={<CreateGroupForm />} />
             <Route path='/groups/:groupId/edit' element={<UpdateGroupForm />} />
           </Routes>
