@@ -1,0 +1,17 @@
+#return-to-events {
+  font-size: 12pt;
+  color: teal;
+  pointer-events: all;
+}
+
+.event-details-top-container {
+  width: 1000px;
+  display: flex;
+  flex-direction: column;
+}
+
+.event-picture {
+  flex-basis: 60%;
+  max-width: 800px;
+  justify-self: left;
+}

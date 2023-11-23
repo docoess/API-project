@@ -25,6 +25,7 @@ export default function GroupList() {
       <nav className='group-list-buttons'>
         <NavLink to='/events'>Events</NavLink>  <NavLink to='/groups'>Groups</NavLink>
       </nav>
+      <p>Groups in Meetup</p>
       <ul className='groups-list'>
         {
           groups && groups.map(group => {
