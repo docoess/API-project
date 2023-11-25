@@ -39,6 +39,10 @@ export default function GroupDetails() {
     navigate(`/groups/${groupId}/edit`);
   }
 
+  const handleCreateEventClick = (groupId) => {
+    navigate(`/groups/${groupId}/events/new`);
+  }
+
   groups = useSelector(state => state.groupState);
   group = groups[groupId];
 
@@ -62,7 +66,7 @@ export default function GroupDetails() {
             {
               user && group && userId === group.organizerId &&
               <span>
-                <button>Create Event</button>
+                <button onClick={() => handleCreateEventClick(groupId)}>Create Event</button>
                 <button onClick={() => handleUpdateClick(groupId)}>Update</button>
                 <OpenModalMenuItem
                   itemText='Delete'

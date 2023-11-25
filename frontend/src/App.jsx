@@ -10,6 +10,7 @@ import GroupDetails from './components/GroupList/GroupDetails';
 import CreateGroupForm from './components/GroupList/CreateGroupForm';
 import UpdateGroupForm from './components/GroupList/UpdateGroupForm';
 import EventDetails from './components/EventList/EventDetails';
+import CreateEventForm from './components/EventList/CreateEventForm';
 
 function Layout() {
   const dispatch = useDispatch();
@@ -34,6 +35,7 @@ function Layout() {
             <Route path='/groups/:groupId' element={<GroupDetails />} />
             <Route path='/events/:eventId' element={<EventDetails />} />
             <Route path='/groups/new' element={<CreateGroupForm />} />
+            <Route path='/groups/:groupId/events/new' element={<CreateEventForm />} />
             <Route path='/groups/:groupId/edit' element={<UpdateGroupForm />} />
           </Routes>
         </>
