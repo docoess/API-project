@@ -2,15 +2,29 @@ import './LandingPage.css';
 import ph_ig from './PH_infographic.jpg';
 import ph_icon from './PH_icon.jpg';
 import { NavLink } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { thunkFetchGroups } from '../../store/groups';
+import { thunkFetchEvents } from '../../store/events';
 
 export default function LandingPage() {
   const sessionUser = useSelector(state => state.session.user);
+  const dispatch = useDispatch();
   const isLinkInactive = !sessionUser;
 
   const handleCreateGroup = () => {
     return 'lp-link-text' + (!isLinkInactive ? '' : ' inactive');
   }
+
+  useEffect(() => {
+
+    const getGroupsAndEvents = async () => {
+      await dispatch(thunkFetchGroups());
+      await dispatch(thunkFetchEvents());
+    }
+
+    getGroupsAndEvents();
+  }, [dispatch]);
 
   return (
     <div className='landing-page-container'>

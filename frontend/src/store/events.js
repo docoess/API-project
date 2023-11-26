@@ -1,5 +1,8 @@
+import Cookies from "js-cookie";
+
 const LOAD_EVENTS = 'events/LOAD';
 const GET_EVENT = 'events/GET_ONE';
+const CREATE_EVENT = 'events/CREATE';
 
 export const actionLoadAllEvents = (events) => {
   return {
@@ -13,6 +16,13 @@ export const actionGetEventInfo = (event, eventInfo) => {
     type: GET_EVENT,
     event,
     eventInfo
+  }
+}
+
+export const actionCreateEvent = (event) => {
+  return {
+    type: CREATE_EVENT,
+    event
   }
 }
 
@@ -36,6 +46,16 @@ export const thunkFetchEventInfo = (eventId) => async (dispatch, getState) => {
   return event;
 }
 
+export const thunkFetchPostEvent = (event, groupId) => async (dispatch) => {
+  const reqBody = event;
+  const route = `/api/groups/${groupId}/events`;
+
+  const response = await fetch(route, {method: 'POST', headers: {"Content-Type": "application/json", "XSRF-Token": Cookies.get('XSRF-TOKEN')}, body: JSON.stringify(reqBody)});
+  const newEvent = await response.json();
+  dispatch(actionCreateEvent(newEvent));
+  return newEvent;
+}
+
 const initialState = { };
 
 const eventReducer = (state = initialState, action) => {
@@ -54,6 +74,11 @@ const eventReducer = (state = initialState, action) => {
       const EventImages = info.EventImages;
       const Venue = info.Venue || {};
       const newState = { ...state, [event.id]: {...state[event.id], ...event, EventImages, Venue} };
+      return newState;
+    }
+    case CREATE_EVENT: {
+      const event = action.event;
+      const newState = { ...state, [event.id]: {...state[event.id], ...event}}
       return newState;
     }
     default:

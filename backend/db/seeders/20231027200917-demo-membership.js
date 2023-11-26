@@ -80,7 +80,28 @@ module.exports = {
         userId: 4,
         groupId: 9,
         status: 'pending'
+      },
+      {
+        userId: 1,
+        groupId: 3,
+        status: 'co-host'
+      },
+      {
+        userId: 1,
+        groupId: 2,
+        status: 'co-host'
+      },
+      {
+        userId: 1,
+        groupId: 5,
+        status: 'co-host'
+      },
+      {
+        userId: 1,
+        groupId: 6,
+        status: 'co-host'
       }
+
     ], { validate: true });
   },
 

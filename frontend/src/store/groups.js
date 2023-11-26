@@ -54,18 +54,12 @@ export const thunkFetchGroups = () => async (dispatch, getState) => {
   return currState;
 }
 
-export const thunkFetchGroupInfo = (groupId) => async (dispatch, getState) => {
-  const currState = getState().groupState;
-  if (Object.keys(currState).length === 0) {
-    const response = await fetch('/api/groups');
-    const groups = await response.json();
-    await dispatch(actionLoadAllGroups(groups));
-  }
+export const thunkFetchGroupInfo = (groupId) => async (dispatch) => {
   const currGroup = await fetch(`/api/groups/${groupId}`);
   const groupInfo = await currGroup.json();
   const eventsResponse = await fetch(`/api/groups/${groupId}/events`);
   const eventsInfo = await eventsResponse.json();
-  let group = currState[groupId] || groupInfo;
+  let group = groupInfo;
   dispatch(actionGetGroupInfo(group, eventsInfo, groupInfo));
   return group;
 }
@@ -109,7 +103,7 @@ const groupReducer = (state = initialState, action) => {
       Object.values(action.groups.Groups).forEach(group => {
         normalizedGroups[group.id] = group;
       });
-      const newState = { ...state, ...normalizedGroups };
+      const newState = { ...normalizedGroups };
       return newState;
     }
     case GET_GROUP: {

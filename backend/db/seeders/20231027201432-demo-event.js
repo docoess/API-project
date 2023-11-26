@@ -166,102 +166,14 @@ module.exports = {
       },
       {
         venueId: null,
-        groupId: 1,
-        name: 'Xmas Eve Coding Party',
-        description: 'Come build a Christmas webpage using what you have learned so far!',
-        type: 'Online',
-        capacity: 10,
-        price: 5,
-        startDate: '2050-12-24 16:00:00',
-        endDate: '2050-12-24 21:00:00'
-      },
-      {
-        venueId: null,
-        groupId: 1,
-        name: 'New Years Eve Coding Party',
-        description: 'Come build a New-Year-New-You Python app using what you have learned so far!',
-        type: 'Online',
-        capacity: 10,
-        price: 5,
-        startDate: '2050-12-31 16:00:00',
-        endDate: '2050-12-31 21:00:00'
-      },
-      {
-        venueId: null,
-        groupId: 1,
-        name: 'And Now For Something Different',
-        description: 'Take a brief look into game dev with C++ and UE5',
-        type: 'Online',
-        capacity: 10,
-        price: 5,
-        startDate: '2051-01-07 16:00:00',
-        endDate: '2051-01-07 21:00:00'
-      },
-      {
-        venueId: null,
-        groupId: 1,
-        name: 'Back to Basics for Web',
-        description: 'Take a break from stressing and go over the basics of HTML, CSS, and JavaScript again!',
-        type: 'Online',
-        capacity: 10,
-        price: 5,
-        startDate: '2051-01-14 16:00:00',
-        endDate: '2051-01-14 21:00:00'
-      },
-      {
-        venueId: 7,
-        groupId: 7,
-        name: 'Woodstock 2055',
-        description: 'The event of the century, again! See Bob Dylan, live, in-person!',
-        type: 'In person',
-        capacity: 3000,
-        price: 450,
-        startDate: '2055-09-25 13:00:00',
-        endDate:  '2055-09-30 23:59:00'
-      },
-      {
-        venueId: 7,
-        groupId: 7,
-        name: 'Woodstock 2056',
-        description: 'Again? I guess the promoters are out of ideas?',
-        type: 'In person',
-        capacity: 3000,
-        price: 450,
-        startDate: '2056-09-25 13:00:00',
-        endDate:  '2056-09-30 23:59:00'
-      },
-      {
-        venueId: 10,
-        groupId: 10,
-        name: 'Fat Tony Release Party',
-        description: 'Come visit with your favorite crime lord, Fat Tony, after his release from prison!',
-        type: 'In person',
-        capacity: 86,
-        price: 86,
-        startDate: '2089-11-11 11:00:00',
-        endDate:  '2089-11-13 13:00:00'
-      },
-      {
-        venueId: null,
-        groupId: 2,
-        name: 'The Release for the 25th WoW Expansion!!!',
-        description: 'Come fight Mega-Arthas and Super-Ony in the new release!',
-        type: 'Online',
-        capacity: 40,
-        price: 70,
-        startDate: '2093-12-26 12:00:00',
-        endDate: '2093-12-29 12:00:00'
-      },
-      {
-        venueId: null,
         groupId: 2,
         name: 'The Release for the 26th WoW Expansion!!!',
         description: 'Come fight Mega-Mega-Arthas and Super-Duper-Ony in the next new release!',
         type: 'Online',
         capacity: 40,
         price: 70,
-        startDate: '2023-11-22 19:00:00',
-        endDate: '2023-11-22 22:00:00'
+        startDate: '2023-11-27 19:00:00',
+        endDate: '2023-11-27 22:00:00'
       }
     ], { validate: true });
   },

@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useParams, NavLink } from "react-router-dom";
+import { useParams, NavLink, Link } from "react-router-dom";
 import { thunkFetchEventInfo, thunkFetchEvents } from "../../store/events";
 import { thunkFetchGroupInfo, thunkFetchGroups } from '../../store/groups';
 import { useEffect } from "react";
@@ -16,33 +16,43 @@ export default function EventDetails() {
 
   useEffect(() => {
 
-    const getEventDetails = async () => {
-      events = await dispatch(thunkFetchEvents());
-      event = Object.values(events).find(el => el.id == Number(eventId));
-      if (eventId) {
-        await dispatch(thunkFetchEventInfo(eventId));
-      }
+    const getEvents = async () => {
+      let events = await dispatch(thunkFetchEvents());
+      return events;
+    }
+
+    const getEventDetails = async (events) => {
+      let event = Object.values(events).find(el => el.id == Number(eventId));
+      await dispatch(thunkFetchEventInfo(eventId));
+      return event;
     }
 
     const getGroups = async () => {
       await dispatch(thunkFetchGroups());
     }
 
-    const getGroupDetails = async () => {
-      if (event && event.Group && event.Group.id) {
-        await dispatch(thunkFetchGroupInfo(event.Group.id));
+    const getGroupDetails = async (event) => {
+      if (event && event.groupId) {
+        await dispatch(thunkFetchGroupInfo(event.groupId));
       }
     }
 
-    getEventDetails();
-    getGroups();
-    getGroupDetails();
+    const getAllData = async () => {
+      let events = await getEvents();
+      let event = await getEventDetails(events);
+      await getGroups();
+      await getGroupDetails(event);
+    }
+
+    getAllData();
+
   }, [dispatch]);
+
 
   events = useSelector(state => state.eventState);
   groups = useSelector(state => state.groupState);
   event = events[eventId];
-  group = event && groups[event.Group.id];
+  group = event && groups[event.groupId];
 
   const eventImage = event && event.EventImages && event.EventImages[0].url;
   const groupImage = group && group.GroupImages && group.GroupImages[0].url;
@@ -66,20 +76,24 @@ export default function EventDetails() {
 
   return (
     <div className='event-details-container'>
-      <NavLink id='return-to-events' to='/events'>&lt; Events</NavLink>
-      <h1>{event && event.name}</h1>
-      <h3>Hosted by {group && group.Organizer && group.Organizer.firstName}  {group && group.Organizer &&  group.Organizer.lastName}</h3>
+      <div id="top-of-event-details">
+        <NavLink id='return-to-events' to='/events'>&lt; Events</NavLink>
+        <h1>{event && event.name}</h1>
+        <h3>Hosted by {group && group.Organizer && group.Organizer.firstName}  {group && group.Organizer &&  group.Organizer.lastName}</h3>
+      </div>
       <div className='event-details-top-container'>
         <div className='event-info-top'>
           <div>
             <img className='event-picture' src={eventImage} />
           </div>
           <div className='event-info-text'>
-            <div className='event-group-info'>
-              <img src={groupImage} />
-              <p>{group && group.name}</p>
-              <p>{group && group.private ? 'Private' : 'Public'}</p>
-            </div>
+            <Link to={`/groups/${event.groupId}`}>
+              <div className='event-group-info'>
+                <img id='group-image-on-event' src={groupImage} />
+                <p>{group && group.name}</p>
+                <p>{group && group.private ? 'Private' : 'Public'}</p>
+              </div>
+            </Link>
             <div className='event-info-main'>
               {
                 eventStart && <p className='event-date-info'>Start {eventStart}</p>
@@ -96,11 +110,11 @@ export default function EventDetails() {
             </div>
           </div>
         </div>
+      </div>
         <div className='event-details-mid'>
           <h3>Details</h3>
           <p>{event && event.description}</p>
         </div>
-      </div>
     </div>
   )
 }

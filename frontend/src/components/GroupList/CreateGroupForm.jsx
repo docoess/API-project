@@ -20,29 +20,29 @@ export default function CreateGroupForm() {
   useEffect(() => {
     const errors = {};
 
-      if (!groupLoc) {
-        errors.loc = 'Location is required'
-      }
+    if (!groupLoc) {
+      errors.loc = 'Location is required'
+    }
 
-      if (!groupName) {
-        errors.name = 'Name is required'
-      }
+    if (!groupName) {
+      errors.name = 'Name is required'
+    }
 
-      if (groupAbout.length < 50) {
-        errors.desc = 'Description must be at least 50 characters long'
-      }
+    if (groupAbout.length < 50) {
+      errors.desc = 'Description must be at least 50 characters long'
+    }
 
-      if (groupType === '') {
-        errors.type = 'Group Type is required'
-      }
+    if (groupType === '') {
+      errors.type = 'Group Type is required'
+    }
 
-      if (groupPrivacy === '') {
-        errors.privacy = 'Visibility Type is required'
-      }
+    if (groupPrivacy === '') {
+      errors.privacy = 'Visibility Type is required'
+    }
 
-      if (!groupImg || (!groupImg.endsWith('.png') && !groupImg.endsWith('.jpg') && !groupImg.endsWith('.jpeg'))) {
-        errors.image = 'Image URL must end in .png, .jpg, or .jpeg';
-      }
+    if (!groupImg || (!groupImg.endsWith('.png') && !groupImg.endsWith('.jpg') && !groupImg.endsWith('.jpeg'))) {
+      errors.image = 'Image URL must end in .png, .jpg, or .jpeg';
+    }
 
     setValidationErrors(errors);
   }, [groupName, groupLoc, groupAbout, groupPrivacy, groupType, groupImg]);

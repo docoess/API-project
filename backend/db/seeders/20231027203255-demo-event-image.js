@@ -90,46 +90,6 @@ module.exports = {
         eventId: 14,
         url: 'https://i.imgur.com/1zwFAtQ.jpg',
         preview: true
-      },
-      {
-        eventId: 15,
-        url: 'https://i.imgur.com/1zwFAtQ.jpg',
-        preview: true
-      },
-      {
-        eventId: 16,
-        url: 'https://i.imgur.com/1zwFAtQ.jpg',
-        preview: true
-      },
-      {
-        eventId: 17,
-        url: 'https://i.imgur.com/1zwFAtQ.jpg',
-        preview: true
-      },
-      {
-        eventId: 18,
-        url: 'https://i.imgur.com/k5HudmG.jpg',
-        preview: true
-      },
-      {
-        eventId: 19,
-        url: 'https://i.imgur.com/k5HudmG.jpg',
-        preview: true
-      },
-      {
-        eventId: 20,
-        url: 'https://i.imgur.com/nBI55V3.png',
-        preview: true
-      },
-      {
-        eventId: 21,
-        url: 'https://i.imgur.com/RXhcfS9.jpg',
-        preview: true
-      },
-      {
-        eventId: 22,
-        url: 'https://i.imgur.com/RXhcfS9.jpg',
-        preview: true
       }
     ], { validate: true });
   },
