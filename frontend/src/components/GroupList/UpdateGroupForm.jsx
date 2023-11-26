@@ -152,7 +152,7 @@ export default function UpdateGroupForm() {
             {hasSubmitted && validationErrors.privacy && validationErrors.privacy}
           </p>
         </div>
-        <button>Create Group</button>
+        <button>Update Group</button>
       </form>
     </>
   )

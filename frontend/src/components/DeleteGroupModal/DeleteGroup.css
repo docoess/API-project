@@ -1,9 +1,9 @@
 .delete-group-confirm {
-  background-color: red;
+  background-color: #FF5A5F;
   color: white;
 }
 
 .delete-group-cancel {
   color: white;
-background-color: darkgray;
+  background-color: #999999;
 }

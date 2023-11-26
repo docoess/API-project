@@ -19,7 +19,7 @@ a {
 }
 
 a.active {
-  color: teal;
+  color: #00525E;
   text-decoration: underline;
   pointer-events: none;
 }

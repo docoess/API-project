@@ -1,4 +1,53 @@
 .create-group-errors {
-  color: red;
+  color: #FF5A5F;
   font-weight: bold;
+}
+
+#create-group-title {
+  color: #00525E;
+  font-size: 16pt;
+}
+
+.create-group-heading, .create-group-heading-top {
+  font-size: 20pt;
+}
+
+.create-group-heading {
+  border-top: 2px solid #999999;
+}
+
+#create-group-btn {
+  color: white;
+  background-color: #FF5A5F;
+  margin-top: 8px;
+  font-size: 14pt;
+}
+
+.create-group-btn-div {
+  border-top: 2px solid #999999;
+}
+
+.create-group-bottom {
+  display: flex;
+  flex-direction: column;
+}
+
+.create-group-bottom > select {
+  width: 100px;
+  background-color: #e8f0fe;
+}
+
+.create-group-bottom > input {
+  width: 300px;
+  background-color: #e8f0fe;
+}
+
+textarea {
+  width: 300px;
+  height: 120px;
+  background-color: #e8f0fe;
+}
+
+form > input {
+  background-color: #e8f0fe;
 }
