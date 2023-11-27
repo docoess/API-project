@@ -1,0 +1,9 @@
+.delete-event-confirm {
+  background-color: #FF5A5F;
+  color: white;
+}
+
+.delete-event-cancel {
+  color: white;
+  background-color: #999999;
+}

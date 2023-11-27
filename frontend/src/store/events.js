@@ -3,6 +3,7 @@ import Cookies from "js-cookie";
 const LOAD_EVENTS = 'events/LOAD';
 const GET_EVENT = 'events/GET_ONE';
 const CREATE_EVENT = 'events/CREATE';
+const DELETE_EVENT = 'events/DELETE';
 
 export const actionLoadAllEvents = (events) => {
   return {
@@ -23,6 +24,13 @@ export const actionCreateEvent = (event) => {
   return {
     type: CREATE_EVENT,
     event
+  }
+}
+
+export const actionDeleteEvent = (eventId) => {
+  return {
+    type: DELETE_EVENT,
+    eventId
   }
 }
 
@@ -56,6 +64,15 @@ export const thunkFetchPostEvent = (event, groupId) => async (dispatch) => {
   return newEvent;
 }
 
+export const thunkFetchDeleteEvent = (eventId) => async (dispatch) => {
+  const route = `/api/events/${eventId}`;
+
+  const response = await fetch(route, {method: 'DELETE', headers: {"XSRF-Token": Cookies.get('XSRF-TOKEN')}});
+  const deleted = await response.json();
+  console.log(deleted);
+  dispatch(actionDeleteEvent(eventId));
+}
+
 const initialState = { };
 
 const eventReducer = (state = initialState, action) => {
@@ -79,6 +96,11 @@ const eventReducer = (state = initialState, action) => {
     case CREATE_EVENT: {
       const event = action.event;
       const newState = { ...state, [event.id]: {...state[event.id], ...event}}
+      return newState;
+    }
+    case DELETE_EVENT: {
+      const newState = { ...state };
+      delete newState[action.eventId];
       return newState;
     }
     default:

@@ -4,6 +4,8 @@ import { thunkFetchEventInfo, thunkFetchEvents } from "../../store/events";
 import { thunkFetchGroupInfo, thunkFetchGroups } from '../../store/groups';
 import { useEffect } from "react";
 import './EventDetails.css'
+import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
+import DeleteEventModal from "../DeleteEventModal/DeleteEventModal";
 
 export default function EventDetails() {
   // const navigate = useNavigate(); , useNavigate
@@ -13,6 +15,8 @@ export default function EventDetails() {
   let event;
   let groups;
   let group;
+  const user = useSelector(state => state.session.user);
+  const userId = user && user.id;
 
   useEffect(() => {
 
@@ -54,6 +58,8 @@ export default function EventDetails() {
   event = events[eventId];
   group = event && groups[event.groupId];
 
+  console.log('GROUP', group)
+
   const eventImage = event && event.EventImages && event.EventImages[0].url;
   const groupImage = group && group.GroupImages && group.GroupImages[0].url;
 
@@ -87,13 +93,15 @@ export default function EventDetails() {
             <img className='event-picture' src={eventImage} />
           </div>
           <div className='event-info-text'>
-            <Link to={`/groups/${event.groupId}`}>
-              <div className='event-group-info'>
-                <img id='group-image-on-event' src={groupImage} />
-                <p>{group && group.name}</p>
-                <p>{group && group.private ? 'Private' : 'Public'}</p>
-              </div>
-            </Link>
+            { event && group &&
+              <Link to={`/groups/${event.groupId}`}>
+                <div className='event-group-info'>
+                  <img id='group-image-on-event' src={groupImage} />
+                  <p>{group && group.name}</p>
+                  <p>{group && group.private ? 'Private' : 'Public'}</p>
+                </div>
+              </Link>
+            }
             <div className='event-info-main'>
               {
                 eventStart && <p className='event-date-info'>Start {eventStart}</p>
@@ -108,6 +116,16 @@ export default function EventDetails() {
                 event && <p>{event.type}</p>
               }
             </div>
+              {
+                user && group && userId === group.organizerId &&
+                <span>
+                  <button>Update</button>
+                  <OpenModalMenuItem
+                    itemText='Delete'
+                    modalComponent={<DeleteEventModal event={event} group={group} />}
+                  />
+                </span>
+              }
           </div>
         </div>
       </div>

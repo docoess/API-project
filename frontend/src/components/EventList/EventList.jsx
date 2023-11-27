@@ -7,7 +7,8 @@ import './EventList.css';
 
 export default function EventList() {
   const dispatch = useDispatch();
-  const events = useSelector(state => Object.values(state.eventState));
+  let eventObj = useSelector(state => state.eventState);
+  const events = Object.values(eventObj);
 
   useEffect(() => {
     dispatch(thunkFetchEvents());
@@ -21,7 +22,7 @@ export default function EventList() {
       <p>Events in Meetup</p>
       <ul className='events-list'>
         {
-          events.map(event => (
+          events && events.map(event => (
             <NavLink className={'event-navlink'} key={event.id} to={`/events/${event.id}`}>
               <EventItem
                 key={event.id}
