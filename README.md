@@ -45,7 +45,7 @@ Allows for sign-up or login, with demo user account login button available for h
 
 ### Backend
 cd into the backend dir and
-```npm install```
+```npm install && npm install -D```
 
 then for DB initialization
 ```npx dotenv sequelize db:migrate```
