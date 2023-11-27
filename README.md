@@ -61,6 +61,9 @@ To start the backend server, use
 ### Frontend
 In a new terminal, cd into the frontend dir
 
+Install with a compound command
+```npm install && npm install -D```
+
 To run the frontend, use
 ```npm run dev```
 
