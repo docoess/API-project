@@ -67,9 +67,7 @@ export const thunkFetchPostEvent = (event, groupId) => async (dispatch) => {
 export const thunkFetchDeleteEvent = (eventId) => async (dispatch) => {
   const route = `/api/events/${eventId}`;
 
-  const response = await fetch(route, {method: 'DELETE', headers: {"XSRF-Token": Cookies.get('XSRF-TOKEN')}});
-  const deleted = await response.json();
-  console.log(deleted);
+  await fetch(route, {method: 'DELETE', headers: {"XSRF-Token": Cookies.get('XSRF-TOKEN')}});
   dispatch(actionDeleteEvent(eventId));
 }
 

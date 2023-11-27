@@ -70,7 +70,6 @@ export const thunkFetchPostGroup = (group) => async (dispatch) => {
 
   const response = await fetch(route, {method: 'POST', headers: {"Content-Type": "application/json", "XSRF-Token": Cookies.get('XSRF-TOKEN')}, body: JSON.stringify(reqBody)});
   const newGroup = await response.json();
-  console.log('NEW GROUP', newGroup)
   dispatch(actionCreateGroup(newGroup));
   return newGroup;
 }
@@ -88,9 +87,8 @@ export const thunkFetchPutGroup = (group, groupId) => async (dispatch) => {
 export const thunkFetchDeleteGroup = (groupId) => async (dispatch) => {
   const route = `/api/groups/${groupId}`;
 
-  const response = await fetch(route, {method: 'DELETE', headers: {"XSRF-Token": Cookies.get('XSRF-TOKEN')}});
-  const deleted = await response.json();
-  console.log(deleted);
+  await fetch(route, {method: 'DELETE', headers: {"XSRF-Token": Cookies.get('XSRF-TOKEN')}});
+
   dispatch(actionDeleteGroup(groupId));
 }
 
