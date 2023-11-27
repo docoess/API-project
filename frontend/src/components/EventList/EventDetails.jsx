@@ -81,58 +81,69 @@ export default function EventDetails() {
   const eventEnd = event && makeTimeString(event.endDate);
 
   return (
-    <div className='event-details-container'>
+    <>
       <div id="top-of-event-details">
         <NavLink id='return-to-events' to='/events'>&lt; Events</NavLink>
         <h1>{event && event.name}</h1>
         <h3>Hosted by {group && group.Organizer && group.Organizer.firstName}  {group && group.Organizer &&  group.Organizer.lastName}</h3>
       </div>
-      <div className='event-details-top-container'>
-        <div className='event-info-top'>
-          <div>
-            <img className='event-picture' src={eventImage} />
-          </div>
-          <div className='event-info-text'>
-            { event && group &&
-              <Link to={`/groups/${event.groupId}`}>
-                <div className='event-group-info'>
-                  <img id='group-image-on-event' src={groupImage} />
-                  <p>{group && group.name}</p>
-                  <p>{group && group.private ? 'Private' : 'Public'}</p>
-                </div>
-              </Link>
-            }
-            <div className='event-info-main'>
-              {
-                eventStart && <p className='event-date-info'>Start {eventStart}</p>
-              }
-              {
-                eventEnd && <p className='event-date-info'>End {eventEnd}</p>
-              }
-              {
-                event && <p>{event.price}</p>
-              }
-              {
-                event && <p>{event.type}</p>
-              }
+      <div className='event-details-container'>
+        <div className='event-details-top-container'>
+          <div className='event-info-top'>
+            <div>
+              <img className='event-picture' src={eventImage} />
             </div>
-              {
-                user && group && userId === group.organizerId &&
-                <span>
-                  <button>Update</button>
-                  <OpenModalMenuItem
-                    itemText='Delete'
-                    modalComponent={<DeleteEventModal event={event} group={group} />}
-                  />
-                </span>
+            <div className='event-info-text'>
+              { event && group &&
+                <Link to={`/groups/${event.groupId}`}>
+                  <div className='event-group-info'>
+                    <img id='group-image-on-event' src={groupImage} />
+                    <p className="event-group-name">{group && group.name}</p>
+                    <p className="event-group-privacy">{group && group.private ? 'Private' : 'Public'}</p>
+                  </div>
+                </Link>
               }
+              <div className='event-info-main'>
+                <i className="fa-regular fa-clock"></i>
+                <div className="event-date-stuff">
+                  {
+                    eventStart && <span className='event-date-info'>START <span className="date-styled">{eventStart}</span></span>
+                  }
+                  {
+                    eventEnd && <span className='event-date-info'>END <span className="date-styled">{eventEnd}</span></span>
+                  }
+                </div>
+                  <i className="fa-solid fa-circle-dollar-to-slot"></i>
+                <div className="event-price-stuff">
+                  {
+                    event && <span>{event.price == 0 ? 'FREE' : `$${event.price}`}</span>
+                  }
+                </div>
+                  <i className="fa-solid fa-map-pin"></i>
+                <div className="event-type-stuff">
+                  {
+                    event && <span>{event.type}</span>
+                  }
+                </div>
+              </div>
+                {
+                  user && group && userId === group.organizerId &&
+                  <span>
+                    <button>Update</button>
+                    <OpenModalMenuItem
+                      itemText='Delete'
+                      modalComponent={<DeleteEventModal event={event} group={group} />}
+                    />
+                  </span>
+                }
+            </div>
           </div>
         </div>
+          <div className='event-details-mid'>
+            <h3>Details</h3>
+            <p>{event && event.description}</p>
+          </div>
       </div>
-        <div className='event-details-mid'>
-          <h3>Details</h3>
-          <p>{event && event.description}</p>
-        </div>
-    </div>
+    </>
   )
 }

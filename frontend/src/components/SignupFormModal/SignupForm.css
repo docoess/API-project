@@ -2,3 +2,39 @@
   color: #FF5A5F;
   font-weight: bold;
 }
+
+#signup-form-div {
+  padding: 10px;
+}
+
+#signup-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px;
+  width: 400px;
+}
+
+#signup-form > input {
+  padding: 4px 0;
+  margin: 4px 0;
+}
+
+#signup-form > button {
+  padding: 4px 0;
+  margin: 4px 0;
+}
+
+#signup-form > h1 {
+  padding: 4px 0;
+  margin: 4px 0;
+  text-align: center;
+}
+
+#signup-button {
+  background-color: #FF5A5F;
+}
+
+#signup-button:disabled {
+  background-color: #CCCCCC;
+}

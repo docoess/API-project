@@ -22,10 +22,11 @@ export default function DeleteGroupModal({ group }) {
   }
 
   return (
-    <>
+    <div className="delete-modal">
+      <p className="confirm-delete-text">Confirm Delete</p>
       <p>Are you sure you want to remove this group?</p>
       <button onClick={handleConfirm} className="delete-group-confirm">Yes (Delete Group)</button>
       <button onClick={handleCancel} className="delete-group-cancel">No (Keep Group)</button>
-    </>
+    </div>
   )
 }

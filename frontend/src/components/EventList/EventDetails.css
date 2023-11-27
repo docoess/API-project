@@ -1,34 +1,41 @@
 #return-to-events {
-  font-size: 12pt;
+  font-size: 14pt;
   color: #00525E;
   pointer-events: all;
 }
 
 .event-details-top-container {
-  width: 1000px;
+  width: 100%;
   display: flex;
   flex-direction: row;
+  background-color: #CCCCCC;
+  font-size: 14pt;
 }
 
 .event-info-top {
   display: flex;
+  justify-content: space-between;
 }
 
 .event-picture {
   flex-basis: 60%;
-  max-width: 700px;
-  justify-self: left;
+  max-width: 600px;
+  margin: 10px 12px;
+  padding: 10px 12px;
 }
 
 .event-info-text {
-  flex-basis: 30%;
+  flex-basis: 45%;
   display: flex;
   flex-direction: column;
+  justify-content: center;
 }
 
 .event-info-main {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 8fr;
+  align-items: center;
   background-color: white;
   margin: 12px;
   padding: 12px;
@@ -36,20 +43,51 @@
 
 #group-image-on-event {
   max-width: 120px;
+  grid-row-start: 1;
+  grid-row-end: 3;
+  align-self: center;
 }
 
 .event-group-info {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  grid-template-rows: 1fr 1fr;
   background-color: white;
   margin: 12px;
   padding: 12px;
 }
 
 .event-details-container {
-  background-color: lightgrey;
+  padding: 0 12%;
+  background-color: #CCCCCC;
+}
+
+.event-details-mid {
+  background-color: #CCCCCC;
 }
 
 #top-of-event-details {
   background-color: white;
+  padding: 0 12%;
+}
+
+.event-date-stuff, .event-price-stuff, .event-type-stuff {
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+}
+
+.date-styled {
+  color: #00525E;
+  font-size: 14pt;
+}
+
+.event-group-name {
+  color: black;
+  font-size: 14pt;
+}
+
+.event-group-privacy {
+  color: #999999;
+  font-size: 14pt;
 }

@@ -85,94 +85,96 @@ export default function CreateGroupForm() {
 
   return (
     <>
-      <p id='create-group-title'>BECOME AN ORGANIZER</p>
-      <p className='create-group-heading-top'>We&apos;ll walk you through a few steps to build your local community</p>
-      <form onSubmit={onSubmit}>
-        <p className='create-group-heading'>First, set your group&apos;s location.</p>
-        <p>Meetup groups meet locally, in person, and online. We&apos;ll connect you
-           with people in your area.
-        </p>
-        <input
-          type="text"
-          onChange={e => setGroupLoc(e.target.value)}
-          value={groupLoc}
-          placeholder='City, STATE'
-        />
-        <p className='create-group-errors'>
-          {hasSubmitted && validationErrors.loc && validationErrors.loc}
-        </p>
-        <p className='create-group-heading'>What will your group&apos;s name be?</p>
-        <p>Choose a name that will give people a clear idea of what the group is about.
-           Feel free to get creative! You can edit this later if you change your mind.
-        </p>
-        <input
-          type="text"
-          onChange={e => setGroupName(e.target.value)}
-          value={groupName}
-          placeholder='What is your group name?'
-        />
-        <p className='create-group-errors'>
-          {hasSubmitted && validationErrors.name && validationErrors.name}
-        </p>
-        <p className='create-group-heading'>Describe the purpose of your group.</p>
-        <p>People will see this when we promote your group, but you&apos;ll be able to
-           add to it later, too.
-        </p>
-        <ol>
-          <li>What&apos;s the purpose of the group?</li>
-          <li>Who should join?</li>
-          <li>What will you do at your events?</li>
-        </ol>
-        <textarea
-          id='create-group-textarea'
-          onChange={e => setGroupAbout(e.target.value)}
-          value={groupAbout}
-          placeholder='Please write at least 50 characters.'
-        />
-        <p className='create-group-errors'>
-          {hasSubmitted && validationErrors.desc && validationErrors.desc}
-        </p>
-        <div className='create-group-bottom'>
-          <p className='create-group-heading'>Final steps...</p>
-          <label>Is this an in-person or online group?</label>
-          <select
-            onChange={e => setGroupType(e.target.value)}
-            value={groupType}
-          >
-            <option value='' disabled>(select one)</option>
-            <option>In person</option>
-            <option>Online</option>
-          </select>
-          <p className='create-group-errors'>
-            {hasSubmitted && validationErrors.type && validationErrors.type}
+      <div id='create-group-form-container'>
+        <p id='create-group-title'>BECOME AN ORGANIZER</p>
+        <p className='create-group-heading-top'>We&apos;ll walk you through a few steps to build your local community</p>
+        <form onSubmit={onSubmit}>
+          <p className='create-group-heading'>First, set your group&apos;s location.</p>
+          <p>Meetup groups meet locally, in person, and online. We&apos;ll connect you
+            with people in your area.
           </p>
-          <label>Is this group private or public?</label>
-          <select
-            onChange={e => setGroupPrivacy(e.target.value === 'Private' ? true : false)}
-            value={groupPrivacy === '' ? '' : (groupPrivacy ? 'Private' : 'Public')}
-          >
-            <option value='' disabled>(select one)</option>
-            <option>Private</option>
-            <option>Public</option>
-          </select>
-          <p className='create-group-errors'>
-            {hasSubmitted && validationErrors.privacy && validationErrors.privacy}
-          </p>
-          <label>Please add an image URL for your group below:</label>
           <input
             type="text"
-            onChange={e => setGroupImg(e.target.value)}
-            value={groupImg}
-            placeholder='Image Url'
+            onChange={e => setGroupLoc(e.target.value)}
+            value={groupLoc}
+            placeholder='City, STATE'
           />
           <p className='create-group-errors'>
-            {hasSubmitted && validationErrors.image && validationErrors.image}
+            {hasSubmitted && validationErrors.loc && validationErrors.loc}
           </p>
-        </div>
-        <div className='create-group-btn-div'>
-          <button id='create-group-btn'>Create Group</button>
-        </div>
-      </form>
+          <p className='create-group-heading'>What will your group&apos;s name be?</p>
+          <p>Choose a name that will give people a clear idea of what the group is about.
+            Feel free to get creative! You can edit this later if you change your mind.
+          </p>
+          <input
+            type="text"
+            onChange={e => setGroupName(e.target.value)}
+            value={groupName}
+            placeholder='What is your group name?'
+          />
+          <p className='create-group-errors'>
+            {hasSubmitted && validationErrors.name && validationErrors.name}
+          </p>
+          <p className='create-group-heading'>Describe the purpose of your group.</p>
+          <p>People will see this when we promote your group, but you&apos;ll be able to
+            add to it later, too.
+          </p>
+          <ol>
+            <li>What&apos;s the purpose of the group?</li>
+            <li>Who should join?</li>
+            <li>What will you do at your events?</li>
+          </ol>
+          <textarea
+            id='create-group-textarea'
+            onChange={e => setGroupAbout(e.target.value)}
+            value={groupAbout}
+            placeholder='Please write at least 50 characters.'
+          />
+          <p className='create-group-errors'>
+            {hasSubmitted && validationErrors.desc && validationErrors.desc}
+          </p>
+          <div className='create-group-bottom'>
+            <p className='create-group-heading'>Final steps...</p>
+            <label>Is this an in-person or online group?</label>
+            <select
+              onChange={e => setGroupType(e.target.value)}
+              value={groupType}
+            >
+              <option value='' disabled>(select one)</option>
+              <option>In person</option>
+              <option>Online</option>
+            </select>
+            <p className='create-group-errors'>
+              {hasSubmitted && validationErrors.type && validationErrors.type}
+            </p>
+            <label>Is this group private or public?</label>
+            <select
+              onChange={e => setGroupPrivacy(e.target.value === 'Private' ? true : false)}
+              value={groupPrivacy === '' ? '' : (groupPrivacy ? 'Private' : 'Public')}
+            >
+              <option value='' disabled>(select one)</option>
+              <option>Private</option>
+              <option>Public</option>
+            </select>
+            <p className='create-group-errors'>
+              {hasSubmitted && validationErrors.privacy && validationErrors.privacy}
+            </p>
+            <label>Please add an image URL for your group below:</label>
+            <input
+              type="text"
+              onChange={e => setGroupImg(e.target.value)}
+              value={groupImg}
+              placeholder='Image Url'
+            />
+            <p className='create-group-errors'>
+              {hasSubmitted && validationErrors.image && validationErrors.image}
+            </p>
+          </div>
+          <div className='create-group-btn-div'>
+            <button id='create-group-btn'>Create Group</button>
+          </div>
+        </form>
+      </div>
     </>
   )
 }

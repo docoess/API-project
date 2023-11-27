@@ -8,6 +8,7 @@
   width: 1000px;
   display: flex;
   flex-direction: column;
+  margin: 0 12%;
 }
 
 .group-picture {
@@ -31,10 +32,53 @@
 .group-info-mid {
   display: flex;
   flex-direction: column;
-  background-color: lightgray;
+  background-color: #CCCCCC;
+}
+
+.mid-info-content {
+  margin: 0 12%;
 }
 
 .join-group-btn {
   justify-self: flex-end;
 
+}
+
+#details-organizer-label, #details-label, .upcoming-label, .past-label {
+  font-size: 24pt;
+  font-weight: bold;
+}
+
+#details-organizer {
+  font-size: 18pt;
+  color: #666666;
+}
+
+#details {
+  font-size: 14pt;
+}
+
+.group-details-event-info {
+  background-color: white;
+  margin: 8px;
+  width: 60%;
+  padding: 12px;
+}
+
+.event-date {
+  color: #00525E;
+}
+
+.event-preview-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.event-details-top {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+}
+
+.event-details-bottom {
+  padding-top: 12px;
 }

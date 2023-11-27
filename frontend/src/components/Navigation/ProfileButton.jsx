@@ -45,6 +45,9 @@ function ProfileButton({ user }) {
 
   return (
     <>
+      {
+       user && <Link id='new-group-navbar-link' to='/groups/new'>Start a new group</Link>
+      }
       <button onClick={toggleMenu}>
         <i className="fas fa-user-circle" />
       </button>
@@ -53,8 +56,8 @@ function ProfileButton({ user }) {
           <>
             <li>Hello, {user.firstName}</li>
             <li>{user.email}</li>
-            <li><Link to='/groups'>View groups</Link></li>
-            <li><Link to='/events'>View events</Link></li>
+            <li id='view-groups-in-dropdown'><Link to='/groups'>View groups</Link></li>
+            <li id='view-events-in-dropdown'><Link to='/events'>View events</Link></li>
             <li>
               <button onClick={logout}>Log Out</button>
             </li>

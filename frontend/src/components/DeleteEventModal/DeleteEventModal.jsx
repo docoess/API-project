@@ -23,10 +23,11 @@ export default function DeleteEventModal({ event, group }) {
   }
 
   return (
-    <>
+    <div className="delete-modal">
+      <p className="confirm-delete-text">Confirm Delete</p>
       <p>Are you sure you want to remove this event?</p>
       <button onClick={handleConfirm} className="delete-event-confirm">Yes (Delete Event)</button>
       <button onClick={handleCancel} className="delete-event-cancel">No (Keep Event)</button>
-    </>
+    </div>
   )
 }

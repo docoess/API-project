@@ -1,3 +1,7 @@
+#create-group-form-container {
+  margin: 0 12%;
+}
+
 .create-group-errors {
   color: #FF5A5F;
   font-weight: bold;

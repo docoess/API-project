@@ -1,0 +1,41 @@
+#create-event-form-container {
+  margin: 0 auto;
+  width: 800px;
+}
+
+#create-event-title {
+  color: black;
+  font-size: 20pt;
+  font-weight: bold;
+}
+
+#create-event-name, #create-event-type, #create-event-privacy, #create-event-price,
+#create-event-start, #create-event-end, #create-event-img, #create-event-about
+{
+  font-size: 14pt;
+}
+
+#create-event-name + input {
+  width: 300px;
+}
+
+form > select {
+  background-color: #e8f0fe;
+}
+
+#create-event-type, #create-event-start, #create-event-img, #create-event-about {
+  border-top: 2px solid #666666;
+  padding-top: 12px;
+  margin-top: 10px;
+}
+
+#create-event-btn {
+  color: white;
+  background-color: #FF5A5F;
+  margin-top: 8px;
+  font-size: 14pt;
+}
+
+.fa-calendar {
+  padding-left: 12px;
+}

@@ -2,6 +2,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import { thunkFetchPostEvent } from "../../store/events";
+import './CreateEventForm.css';
 import Cookies from "js-cookie";
 
 export default function CreateEventForm() {
@@ -108,93 +109,95 @@ export default function CreateEventForm() {
 
   return (
     <>
-      <h1>Create an event for {group && group.name}</h1>
-      <form onSubmit={onSubmit}>
-        <label>What is the name of your event?</label>
-        <input
-          type='text'
-          onChange={e => setEventName(e.target.value)}
-          value={eventName}
-          placeholder="Event Name"
-        />
-        <p className='create-group-errors'>
-          {hasSubmitted && validationErrors.name && validationErrors.name}
-        </p>
-        <label>Is this an in person or online event?</label>
-        <select
-          onChange={e => setEventType(e.target.value)}
-          value={eventType}
-        >
-          <option value='' disabled>(select one)</option>
-          <option>In person</option>
-          <option>Online</option>
-        </select>
-        <p className='create-group-errors'>
-          {hasSubmitted && validationErrors.type && validationErrors.type}
-        </p>
-        <label>Is this event private or public?</label>
-        <select
-          onChange={e => setEventPrivacy(e.target.value === 'Private' ? true : false)}
-          value={eventPrivacy === '' ? '' : (eventPrivacy ? 'Private' : 'Public')}
-        >
-          <option value='' disabled>(select one)</option>
-          <option>Private</option>
-          <option>Public</option>
-        </select>
-        <p className='create-group-errors'>
-          {hasSubmitted && validationErrors.privacy && validationErrors.privacy}
-        </p>
-        <label>What is the price for your event?</label>
-        <input
-          type='number'
-          onChange={e => setEventPrice(e.target.value)}
-          value={eventPrice}
-          placeholder="0"
-        />
-        <p className='create-group-errors'>
-          {hasSubmitted && validationErrors.price && validationErrors.price}
-        </p>
-        <label>When does your event start?</label>
-        <input
-          type='text'
-          onChange={e => setEventStart(e.target.value)}
-          value={eventStart}
-          placeholder="MM/DD/YYYY, HH:mm AM"
-        />
-        <p className='create-group-errors'>
-          {hasSubmitted && validationErrors.start && validationErrors.start}
-        </p>
-        <label>When does your event end?</label>
-        <input
-          type='text'
-          onChange={e => setEventEnd(e.target.value)}
-          value={eventEnd}
-          placeholder="MM/DD/YYYY, HH:mm PM"
-        />
-        <p className='create-group-errors'>
-          {hasSubmitted && validationErrors.end && validationErrors.end}
-        </p>
-        <label>Please add an image url for your event below:</label>
-        <input
-          type="text"
-          onChange={e => setEventImg(e.target.value)}
-          value={eventImg}
-          placeholder="Image URL"
-        />
-        <p className='create-group-errors'>
-          {hasSubmitted && validationErrors.image && validationErrors.image}
-        </p>
-        <label>Please describe your event:</label>
-        <textarea
-          onChange={e => setEventAbout(e.target.value)}
-          value={eventAbout}
-          placeholder="Please include at least 30 characters"
-        />
-        <p className='create-group-errors'>
-          {hasSubmitted && validationErrors.about && validationErrors.about}
-        </p>
-        <button>Create Event</button>
-      </form>
+      <div id='create-event-form-container'>
+        <p id='create-event-title'>Create an event for {group && group.name}</p>
+        <form onSubmit={onSubmit}>
+          <p id='create-event-name'>What is the name of your event?</p>
+          <input
+            type='text'
+            onChange={e => setEventName(e.target.value)}
+            value={eventName}
+            placeholder="Event Name"
+          />
+          <p className='create-group-errors'>
+            {hasSubmitted && validationErrors.name && validationErrors.name}
+          </p>
+          <p id='create-event-type'>Is this an in person or online event?</p>
+          <select
+            onChange={e => setEventType(e.target.value)}
+            value={eventType}
+          >
+            <option value='' disabled>(select one)</option>
+            <option>In person</option>
+            <option>Online</option>
+          </select>
+          <p className='create-group-errors'>
+            {hasSubmitted && validationErrors.type && validationErrors.type}
+          </p>
+          <p id='create-event-privacy'>Is this event private or public?</p>
+          <select
+            onChange={e => setEventPrivacy(e.target.value === 'Private' ? true : false)}
+            value={eventPrivacy === '' ? '' : (eventPrivacy ? 'Private' : 'Public')}
+          >
+            <option value='' disabled>(select one)</option>
+            <option>Private</option>
+            <option>Public</option>
+          </select>
+          <p className='create-group-errors'>
+            {hasSubmitted && validationErrors.privacy && validationErrors.privacy}
+          </p>
+          <p id='create-event-price'>What is the price for your event?</p>
+          <input
+            type='number'
+            onChange={e => setEventPrice(e.target.value)}
+            value={eventPrice}
+            placeholder="0"
+          />
+          <p className='create-group-errors'>
+            {hasSubmitted && validationErrors.price && validationErrors.price}
+          </p>
+          <p id='create-event-start'>When does your event start?</p>
+          <input
+            type='text'
+            onChange={e => setEventStart(e.target.value)}
+            value={eventStart}
+            placeholder="MM/DD/YYYY, HH:mm AM"
+          /><i className="fa-regular fa-calendar"></i>
+          <p className='create-group-errors'>
+            {hasSubmitted && validationErrors.start && validationErrors.start}
+          </p>
+          <p id='create-event-end'>When does your event end?</p>
+          <input
+            type='text'
+            onChange={e => setEventEnd(e.target.value)}
+            value={eventEnd}
+            placeholder="MM/DD/YYYY, HH:mm PM"
+          /><i className="fa-regular fa-calendar"></i>
+          <p className='create-group-errors'>
+            {hasSubmitted && validationErrors.end && validationErrors.end}
+          </p>
+          <p id='create-event-img'>Please add an image url for your event below:</p>
+          <input
+            type="text"
+            onChange={e => setEventImg(e.target.value)}
+            value={eventImg}
+            placeholder="Image URL"
+          />
+          <p className='create-group-errors'>
+            {hasSubmitted && validationErrors.image && validationErrors.image}
+          </p>
+          <p id='create-event-about'>Please describe your event:</p>
+          <textarea
+            onChange={e => setEventAbout(e.target.value)}
+            value={eventAbout}
+            placeholder="Please include at least 30 characters"
+          />
+          <p className='create-group-errors'>
+            {hasSubmitted && validationErrors.about && validationErrors.about}
+          </p>
+          <button id='create-event-btn'>Create Event</button>
+        </form>
+      </div>
     </>
   )
 }

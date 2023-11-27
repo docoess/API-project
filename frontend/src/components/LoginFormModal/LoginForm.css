@@ -2,3 +2,38 @@
   color: #FF5A5F;
   font-weight: bold;
 }
+
+#login-form-div {
+  padding: 10px;
+}
+
+#login-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+#login-form > input {
+  padding: 4px 0;
+  margin: 4px 0;
+}
+
+#login-form > button {
+  padding: 4px 0;
+  margin: 4px 0;
+}
+
+#login-form > h1 {
+  padding: 4px 0;
+  margin: 4px 0;
+  text-align: center;
+}
+
+#login-button {
+  background-color: #FF5A5F;
+}
+
+#login-button:disabled {
+  background-color: #CCCCCC;
+}

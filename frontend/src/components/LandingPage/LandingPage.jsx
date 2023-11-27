@@ -1,6 +1,8 @@
 import './LandingPage.css';
-import ph_ig from './PH_infographic.jpg';
-import ph_icon from './PH_icon.jpg';
+import main_ig from './main.png';
+import group_icon from './highfive.png';
+import event_icon from './ticketstub.jpg';
+import new_group_icon from './group.png';
 import { NavLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
@@ -39,7 +41,7 @@ export default function LandingPage() {
           frankfurter beef turducken.</span>
         </div>
         <div className='infographic'>
-          <img className='info-pic' src={ph_ig} />
+          <img className='info-pic' src={main_ig} />
         </div>
       </div>
       <div className='lp-sec2-container'>
@@ -50,26 +52,26 @@ export default function LandingPage() {
       </div>
       <div className='lp-sec3-container'>
         <div className='lp-btn-container'>
-          <img className='lp-btn-pic' src={ph_icon} />
+          <img className='lp-btn-pic' src={group_icon} />
           <NavLink to='/groups' className={'lp-link-text'}>See all groups</NavLink>
           <p className='lp-btn-text'>Meetup ipsum dolor amet ham t-bone hamburger
           filet mignon.</p>
         </div>
         <div className='lp-btn-container'>
-          <img className='lp-btn-pic' src={ph_icon} />
+          <img className='lp-btn-pic' src={event_icon} />
           <NavLink to='/events' className={'lp-link-text'}>Find an event</NavLink>
           <p className='lp-btn-text'>Meetup ipsum dolor amet ham t-bone hamburger
           filet mignon.</p>
         </div>
         <div className='lp-btn-container'>
-          <img className='lp-btn-pic' src={ph_icon} />
+          <img className='lp-btn-pic' src={new_group_icon} />
           <NavLink to='/groups/new' className={handleCreateGroup}>Start a group</NavLink>
           <p className='lp-btn-text'>Meetup ipsum dolor amet ham t-bone hamburger
           filet mignon.</p>
         </div>
       </div>
       <div className='lp-sec4-container'>
-        <button>Join Meetup</button>
+        <button id='join-button'>Join Meetup</button>
       </div>
     </div>
   )
