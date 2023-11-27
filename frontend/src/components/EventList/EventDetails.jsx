@@ -58,8 +58,6 @@ export default function EventDetails() {
   event = events[eventId];
   group = event && groups[event.groupId];
 
-  console.log('GROUP', group)
-
   const eventImage = event && event.EventImages && event.EventImages[0].url;
   const groupImage = group && group.GroupImages && group.GroupImages[0].url;
 
