@@ -172,8 +172,8 @@ module.exports = {
         type: 'Online',
         capacity: 40,
         price: 70,
-        startDate: '2023-11-27 19:00:00',
-        endDate: '2023-11-27 22:00:00'
+        startDate: '2050-11-27 19:00:00',
+        endDate: '2050-11-27 22:00:00'
       }
     ], { validate: true });
   },
