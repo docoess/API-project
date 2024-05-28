@@ -70,9 +70,6 @@ export default function LandingPage() {
           filet mignon.</p>
         </div>
       </div>
-      <div className='lp-sec4-container'>
-        <button id='join-button'>Join Meetup</button>
-      </div>
     </div>
   )
 }
