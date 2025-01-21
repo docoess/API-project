@@ -7,6 +7,9 @@ const { requireAuth } = require('../../utils/auth.js')
 const { Op } = require('sequelize');
 const { validateEvent, validateQueryParams } = require('../../utils/custom-validations.js');
 
+
+// ALL ROUTES PERTAINING TO EVENTS
+
 router.get('/:eventId', async (req, res, next) => {
   const { eventId } = req.params;
 
