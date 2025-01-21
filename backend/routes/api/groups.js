@@ -7,6 +7,8 @@ const { requireAuth } = require('../../utils/auth.js')
 const { Op } = require('sequelize');
 const { validateEvent, validateGroup, validateVenue } = require('../../utils/custom-validations.js');
 
+// ALL ROUTES PERTAINING TO GROUPS
+
 router.get('/:groupId/venues', requireAuth, async (req, res, next) => {
   const userId = req.user.id;
   const { groupId } = req.params;
