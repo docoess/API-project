@@ -6,6 +6,8 @@ const { requireAuth } = require('../../utils/auth.js')
 
 const { validateVenue } = require('../../utils/custom-validations.js');
 
+// ALL ROUTES PERTAINING TO VENUES
+
 router.put('/:venueId', requireAuth, validateVenue, async (req, res, next) => {
   const userId = req.user.id;
   const { venueId } = req.params;
